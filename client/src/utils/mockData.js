@@ -73,7 +73,7 @@ export const PRODUCTS = [
 ];
 
 export const CATEGORIES = [
-  { name: 'Malt Powder', image: 'https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png' },
+  { name: 'Malt Powder', image: '/ragi.png' },
   { name: 'Flour', image: 'https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png' },
   { name: 'Rice', image: 'https://i.ibb.co/5xtSdfNL/Gemini-Generated-Image-uedgjwuedgjwuedg.png' },
   { name: 'Teas', image: '/milletea.png' }
