@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const cartTotal = useSelector(state => state.cart.totalQuantity);
+  const user = useSelector(state => state.user.user);
   const location = useLocation();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Navbar = () => {
           <img 
             src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
             alt="Logi" 
-            className="h-10 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform" 
+            className="h-12 md:h-18 w-auto object-contain group-hover:scale-105 transition-transform" 
           />
         </Link>
 
@@ -52,8 +53,23 @@ const Navbar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-5">
-          <Link to="/login" className="text-gray-600 hover:text-primary transition-colors">
-            <User size={22} />
+          <Link to={user ? "/profile" : "/login"} className="text-gray-600 hover:text-primary transition-all">
+            {user ? (
+               <div className="flex items-center space-x-2 bg-gray-50 p-1 pr-3 rounded-full border border-gray-100 hover:bg-white hover:shadow-md transition-all">
+                 {user.photoURL ? (
+                    <img src={user.photoURL} className="w-8 h-8 rounded-full border-2 border-white shadow-sm" alt="profile" />
+                 ) : (
+                    <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black uppercase ring-2 ring-white">
+                      {user.name?.charAt(0) || 'U'}
+                    </div>
+                 )}
+                 <span className="hidden lg:block text-[10px] font-black uppercase tracking-widest text-gray-500">{user.name?.split(' ')[0]}</span>
+               </div>
+            ) : (
+               <div className="p-2 hover:bg-gray-50 rounded-full transition-colors">
+                 <User size={22} />
+               </div>
+            )}
           </Link>
           <Link to="/cart" className="relative text-gray-600 hover:text-primary transition-colors">
             <ShoppingCart size={22} />
