@@ -49,6 +49,7 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
+      // Identity Validation: Google Auth Popup
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
@@ -61,7 +62,7 @@ const Login = () => {
         lastLogin: new Date().toISOString()
       };
 
-      // OPTIMIZATON: Dispatch and Navigate instantly, sync data in background
+      // Concurrent Operations: Instant Access + Background Registry Sync
       dispatch(setUser({ 
         email: user.email, 
         name: user.displayName, 
@@ -69,12 +70,12 @@ const Login = () => {
         uid: user.uid
       }));
 
-      // Background registration to Cloud Registry
+      // Background Cloud Registry Update
       setDoc(doc(db, "users", user.uid), userData, { merge: true }).catch(err => {
-         console.warn("Background cloud sync delayed:", err);
+         console.warn("Background cloud sync latency:", err);
       });
       
-      toast.success('Access Granted');
+      toast.success('Session Authorized');
       if (user.email === 'pratheekmadupu2006@gmail.com') {
         navigate('/choose-interface', { replace: true });
       } else {
