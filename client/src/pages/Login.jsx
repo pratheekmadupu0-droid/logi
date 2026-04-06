@@ -57,7 +57,11 @@ const Login = () => {
         uid: user.uid
       }));
       toast.success('Successfully Authenticated!');
-      navigate(from, { replace: true });
+      if (user.email === 'pratheekmadupu2006@gmail.com') {
+        navigate('/choose-interface', { replace: true });
+      } else {
+        navigate(from, { replace: true });
+      }
     } catch (error) {
       console.error("Google login error:", error);
       toast.error('Google Sign-In failed.');

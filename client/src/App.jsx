@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Admin from './pages/Admin';
+import AdminLanding from './pages/AdminLanding';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Products />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/choose-interface" element={<AdminLanding />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Search, Menu, X } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { ShoppingCart, User, Search, Menu, X, LogOut } from 'lucide-react';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
+import { logout } from '../redux/userSlice';
+import { auth } from '../firebase/config';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +13,13 @@ const Navbar = () => {
   const cartTotal = useSelector(state => state.cart.totalQuantity);
   const user = useSelector(state => state.user.user);
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    auth.signOut();
+    dispatch(logout());
+    toast.success('Logged out successfully');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +34,7 @@ const Navbar = () => {
     { name: 'Shop', path: '/shop' },
     { name: 'About', path: '/#about' },
     { name: 'Contact', path: '/#contact' },
-    { name: 'Admin', path: '/admin' },
+    ...(user?.email === 'pratheekmadupu2006@gmail.com' ? [{ name: 'Admin', path: '/admin' }] : []),
   ];
 
   return (
@@ -54,24 +64,36 @@ const Navbar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-5">
-          <Link to={user ? "/profile" : "/login"} className="text-gray-600 hover:text-primary transition-all">
-            {user ? (
-               <div className="flex items-center space-x-2 bg-gray-50 p-1 pr-3 rounded-full border border-gray-100 hover:bg-white hover:shadow-md transition-all">
-                 {user.photoURL ? (
-                    <img src={user.photoURL} className="w-8 h-8 rounded-full border-2 border-white shadow-sm" alt="profile" />
-                 ) : (
-                    <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black uppercase ring-2 ring-white">
-                      {user.name?.charAt(0) || 'U'}
-                    </div>
-                 )}
-                 <span className="hidden lg:block text-[10px] font-black uppercase tracking-widest text-gray-500">{user.name?.split(' ')[0]}</span>
-               </div>
-            ) : (
-               <div className="p-2 hover:bg-gray-50 rounded-full transition-colors">
-                 <User size={22} />
-               </div>
+          <div className="flex items-center space-x-3">
+            <Link to={user ? "/profile" : "/login"} className="text-gray-600 hover:text-primary transition-all">
+              {user ? (
+                 <div className="flex items-center space-x-2 bg-gray-50 p-1 pr-3 rounded-full border border-gray-100 hover:bg-white hover:shadow-md transition-all group">
+                   {user.photoURL ? (
+                      <img src={user.photoURL} className="w-8 h-8 rounded-full border-2 border-white shadow-sm" alt="profile" />
+                   ) : (
+                      <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black uppercase ring-2 ring-white">
+                        {user.name?.charAt(0) || 'U'}
+                      </div>
+                   )}
+                   <span className="hidden lg:block text-[10px] font-black uppercase tracking-widest text-gray-500">{user.name?.split(' ')[0]}</span>
+                 </div>
+              ) : (
+                 <div className="p-2 hover:bg-gray-50 rounded-full transition-colors">
+                   <User size={22} />
+                 </div>
+              )}
+            </Link>
+
+            {user && (
+               <button 
+                 onClick={handleLogout}
+                 className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                 title="Logout"
+               >
+                 <LogOut size={20} />
+               </button>
             )}
-          </Link>
+          </div>
           <Link to="/cart" className="relative text-gray-600 hover:text-primary transition-colors">
             <ShoppingCart size={22} />
             {cartTotal > 0 && (

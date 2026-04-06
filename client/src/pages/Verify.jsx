@@ -37,7 +37,11 @@ const Verify = () => {
           }));
           
           toast.success('Successfully Signed In!');
-          navigate('/');
+          if (result.user.email === 'pratheekmadupu2006@gmail.com') {
+             navigate('/choose-interface', { replace: true });
+          } else {
+             navigate('/');
+          }
         } catch (error) {
           console.error(error);
           toast.error('Authentication link expired or invalid.');
@@ -65,7 +69,11 @@ const Verify = () => {
         name: result.user.email?.split('@')[0]
       }));
       toast.success('Successfully Signed In!');
-      navigate('/');
+      if (result.user.email === 'pratheekmadupu2006@gmail.com') {
+          navigate('/choose-interface', { replace: true });
+      } else {
+          navigate('/');
+      }
     } catch (error) {
            console.error(error);
       toast.error('Invalid link or email address.');
