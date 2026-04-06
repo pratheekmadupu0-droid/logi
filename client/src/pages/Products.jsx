@@ -182,23 +182,25 @@ const Products = () => {
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                 <AnimatePresence mode="popLayout">
                    {products.map((product) => (
-                      <motion.div layout key={product.id} className="p-6 bg-white border border-gray-50 rounded-[50px] hover:shadow-2xl transition-all group">
-                         <div className="relative overflow-hidden rounded-[35px] h-64 bg-gray-50 mb-6 flex items-center justify-center">
-                            <img src={product.image} className="h-full w-full object-contain p-8 group-hover:scale-110 transition-transform duration-700" alt={product.name} />
-                         </div>
-                         <div className="space-y-4">
-                            <div className="flex justify-between items-center bg-gray-50 p-2 px-4 rounded-full">
-                               <span className="text-[9px] font-black uppercase text-primary tracking-widest">{product.category}</span>
-                               <div className="flex items-center text-amber-500 space-x-1">
-                                  <Star size={10} fill="currentColor" />
-                                  <span className="text-[10px] font-black">{product.rating}</span>
+                      <motion.div layout key={product.id} className="p-6 bg-white border border-gray-50 rounded-[50px] hover:shadow-2xl transition-all group relative">
+                         <Link to={`/product/${product.id}`} className="block">
+                            <div className="relative overflow-hidden rounded-[35px] h-64 bg-gray-50 mb-6 flex items-center justify-center">
+                               <img src={product.image} className="h-full w-full object-contain p-8 group-hover:scale-110 transition-transform duration-700" alt={product.name} />
+                            </div>
+                            <div className="space-y-4">
+                               <div className="flex justify-between items-center bg-gray-50 p-2 px-4 rounded-full">
+                                  <span className="text-[9px] font-black uppercase text-primary tracking-widest">{product.category}</span>
+                                  <div className="flex items-center text-amber-500 space-x-1">
+                                     <Star size={10} fill="currentColor" />
+                                     <span className="text-[10px] font-black">{product.rating}</span>
+                                  </div>
                                </div>
+                               <h3 className="text-lg font-black text-gray-900 leading-tight uppercase tracking-tight truncate">{product.name}</h3>
                             </div>
-                            <h3 className="text-lg font-black text-gray-900 leading-tight uppercase tracking-tight truncate">{product.name}</h3>
-                            <div className="flex items-center justify-between pt-4">
-                               <p className="text-3xl font-black text-primary italic">₹ {product.price}</p>
-                               <button onClick={() => handleAddToCart(product)} className="bg-primary text-white p-4 rounded-3xl active:scale-90 transition-all"><ShoppingCart size={22} /></button>
-                            </div>
+                         </Link>
+                         <div className="flex items-center justify-between pt-4">
+                            <p className="text-3xl font-black text-primary italic">₹ {product.price}</p>
+                            <button onClick={() => handleAddToCart(product)} className="bg-primary text-white p-4 rounded-3xl active:scale-90 transition-all z-10"><ShoppingCart size={22} /></button>
                          </div>
                       </motion.div>
                    ))}

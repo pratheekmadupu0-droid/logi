@@ -11,6 +11,7 @@ const ProductDetail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [product, setProduct] = useState(null);
+    const [selectedVariant, setSelectedVariant] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState('description');
     const [loading, setLoading] = useState(true);
@@ -22,10 +23,13 @@ const ProductDetail = () => {
             try {
                 const { data } = await axios.get(`${API_URL}/api/products/${id}`);
                 setProduct(data);
+                if (data.variants && data.variants.length > 0) {
+                    setSelectedVariant(data.variants[0]);
+                }
             } catch (err) {
                 console.error("Detail fetch failed, using fallback");
                 // Static fallback for critical UI stability
-                setProduct({
+                const fallback = {
                     id: id,
                     name: "Logi Nutritional Essential",
                     price: 250,
@@ -36,7 +40,8 @@ const ProductDetail = () => {
                     reviews: "120+",
                     benefits: ["Stone Ground", "Organic", "Low-GI"],
                     nutrients: ["Protein: 12g", "Iron: 4mg", "Fiber: 8g"]
-                });
+                };
+                setProduct(fallback);
             } finally {
                 setLoading(false);
             }
@@ -49,13 +54,21 @@ const ProductDetail = () => {
         <div className="min-h-screen pt-32 flex flex-col items-center justify-center space-y-4">
              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
              <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Accessing Logistics Hub...</p>
-        </div>
+         </div>
     );
 
     const handleAddToCart = () => {
-        dispatch(addItem({ ...product, quantity }));
-        toast.success(`${product.name} added to cart!`);
+        const itemToAdd = {
+            ...product,
+            price: selectedVariant ? selectedVariant.price : product.price,
+            size: selectedVariant ? selectedVariant.size : null,
+            quantity
+        };
+        dispatch(addItem(itemToAdd));
+        toast.success(`${product.name} ${selectedVariant ? `(${selectedVariant.size})` : ''} added to cart!`);
     };
+
+    const currentPrice = selectedVariant ? selectedVariant.price : product.price;
 
     return (
         <div className="bg-[#FCFBFA] pt-32 pb-20 overflow-hidden">
@@ -94,10 +107,28 @@ const ProductDetail = () => {
 
                         <p className="text-gray-500 text-lg font-medium leading-relaxed max-w-lg">{product.description}</p>
 
+                        {/* Variant Selection */}
+                        {product.variants && product.variants.length > 0 && (
+                           <div className="space-y-4">
+                              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Select Configuration</p>
+                              <div className="flex flex-wrap gap-3">
+                                 {product.variants.map((v, i) => (
+                                    <button 
+                                       key={i} 
+                                       onClick={() => setSelectedVariant(v)}
+                                       className={`px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all border ${selectedVariant?.size === v.size ? 'bg-primary text-white border-primary shadow-lg scale-105' : 'bg-white text-gray-400 border-gray-100 hover:border-primary/30'}`}
+                                    >
+                                       {v.size} - ₹{v.price}
+                                    </button>
+                                 ))}
+                              </div>
+                           </div>
+                        )}
+
                         <div className="flex items-end justify-between py-8 border-y border-gray-50">
                            <div className="space-y-1">
                               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Unit Price</p>
-                              <p className="text-5xl font-black text-primary italic leading-none">₹ {product.price}</p>
+                              <p className="text-5xl font-black text-primary italic leading-none">₹ {currentPrice}</p>
                            </div>
                            <div className="flex items-center bg-gray-50 p-2 rounded-[30px] border border-gray-100">
                               <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:text-primary transition-all active:scale-90"><Minus size={18} /></button>

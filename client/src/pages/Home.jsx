@@ -102,12 +102,14 @@ const Home = () => {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid md:grid-cols-3 gap-10">
           {products.slice(0, 3).map((product, i) => (
-             <motion.div key={i} whileHover={{ y: -10 }} className="p-8 bg-white border border-gray-50 rounded-[60px] shadow-sm hover:shadow-2xl transition-all">
-                <img src={product.image} className="h-64 mx-auto object-contain mb-8 p-4 bg-gray-50 rounded-[40px]" alt={product.name} />
-                <h3 className="text-xl font-black text-gray-900 uppercase mb-2">{product.name}</h3>
+             <motion.div key={i} whileHover={{ y: -10 }} className="p-8 bg-white border border-gray-50 rounded-[60px] shadow-sm hover:shadow-2xl transition-all group">
+                <Link to={`/product/${product.id}`} className="block">
+                   <img src={product.image} className="h-64 mx-auto object-contain mb-8 p-4 bg-gray-50 rounded-[40px] group-hover:scale-105 transition-transform" alt={product.name} />
+                   <h3 className="text-xl font-black text-gray-900 uppercase mb-2">{product.name}</h3>
+                </Link>
                 <div className="flex items-center justify-between">
                    <p className="text-3xl font-black text-primary italic">₹ {product.price}</p>
-                   <button onClick={() => handleAddToCart(product)} className="bg-primary text-white p-4 rounded-3xl"><ArrowRight /></button>
+                   <Link to={`/product/${product.id}`} className="bg-primary text-white p-4 rounded-3xl"><ArrowRight /></Link>
                 </div>
              </motion.div>
           ))}
