@@ -294,7 +294,15 @@ const Admin = () => {
                     {activeTab === 'products' && (
                         <div className="grid lg:grid-cols-2 gap-10">
                             <div className="bg-white rounded-[60px] p-10 shadow-2xl border border-gray-100">
-                                <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-10">Catalog Inventory</h3>
+                                <div className="flex justify-between items-center mb-10">
+                                   <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">Catalog Inventory</h3>
+                                   <button 
+                                     onClick={() => setEditingProduct({ name: '', price: 0, image: '', category: 'Premium', description: '' })}
+                                     className="bg-primary text-white p-4 rounded-2xl hover:bg-accent transition-all shadow-xl active:scale-95"
+                                   >
+                                      <Plus size={20} />
+                                   </button>
+                                </div>
                                 <div className="space-y-4 max-h-[700px] overflow-y-auto pr-4 scrollbar-hide">
                                     {products.map(p => (
                                        <div key={p.id} className="flex items-center justify-between p-6 bg-gray-50 rounded-[35px] group hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-gray-100">
@@ -307,7 +315,7 @@ const Admin = () => {
                                           </div>
                                           <div className="flex space-x-2">
                                              <button onClick={() => setEditingProduct(p)} className="p-3 text-gray-300 hover:text-primary transition-colors"><Edit3 size={20} /></button>
-                                             <button className="p-3 text-gray-300 hover:text-red-500 transition-colors"><Trash2 size={20} /></button>
+                                             <button onClick={() => handleDeleteProduct(p.id)} className="p-3 text-gray-300 hover:text-red-500 transition-colors"><Trash2 size={20} /></button>
                                           </div>
                                        </div>
                                     ))}
@@ -317,36 +325,46 @@ const Admin = () => {
                             {/* Modification Port */}
                             <div className="bg-white rounded-[60px] p-10 shadow-2xl border border-gray-100 sticky top-32 h-fit overflow-hidden">
                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
-                               <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-10">{editingProduct ? 'Interface Update' : 'Asset Modification'}</h3>
+                               <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-10">{editingProduct ? (editingProduct.id ? 'Interface Update' : 'New Asset Protocol') : 'Asset Modification'}</h3>
                                {editingProduct ? (
-                                  <form onSubmit={handleUpdateProduct} className="space-y-8">
+                                  <form onSubmit={editingProduct.id ? handleUpdateProduct : handleCreateProduct} className="space-y-8">
                                      <div className="space-y-6">
                                         <div className="space-y-2 px-4">
                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Brand Identifier</label>
-                                           <input className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" value={editingProduct.name} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} />
+                                           <input required className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" value={editingProduct.name} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} placeholder="Product Name" />
                                         </div>
                                         <div className="space-y-2 px-4">
                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Valuation (INR)</label>
-                                           <input className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" type="number" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: parseInt(e.target.value)})} />
+                                           <input required className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" type="number" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: parseInt(e.target.value)})} />
+                                        </div>
+                                        <div className="space-y-2 px-4">
+                                           <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Visual Asset URL</label>
+                                           <input required className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" value={editingProduct.image} onChange={e => setEditingProduct({...editingProduct, image: e.target.value})} placeholder="https://image-url.com" />
                                         </div>
                                         <div className="space-y-2 px-4">
                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Inventory Category</label>
                                            <select className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" value={editingProduct.category} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})}>
-                                              {['Malt', 'Flour', 'Child Nutrition', 'Rice', 'Premium'].map(c => <option key={c}>{c}</option>)}
+                                              {['Malt', 'Flour', 'Rice', 'Nutritional', 'Premium', 'Child Care'].map(c => <option key={c}>{c}</option>)}
                                            </select>
+                                        </div>
+                                        <div className="space-y-2 px-4">
+                                           <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Intelligence Description</label>
+                                           <textarea required rows="4" className="w-full bg-gray-50 border-none rounded-[35px] px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner resize-none" value={editingProduct.description} onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} placeholder="System Details..." />
                                         </div>
                                      </div>
                                      <div className="flex px-4 gap-4 pt-10">
                                         <button type="submit" className="flex-grow bg-gray-900 text-white rounded-[30px] py-5 font-black uppercase text-[10px] tracking-widest shadow-2xl hover:bg-primary transition-all flex items-center justify-center space-x-3">
-                                           <Save size={18} /> <span>Synchronize Data</span>
+                                           <Save size={18} /> <span>{editingProduct.id ? 'Synchronize Data' : 'Initialize Asset'}</span>
                                         </button>
-                                        <button onClick={() => setEditingProduct(null)} className="p-4 bg-gray-100 text-gray-400 rounded-[30px] hover:text-red-500"><X size={24} /></button>
+                                        <button onClick={() => setEditingProduct(null)} className="p-4 bg-gray-100 text-gray-400 rounded-[30px] hover:text-red-500 transition-colors"><X size={24} /></button>
                                      </div>
                                   </form>
                                ) : (
-                                  <div className="py-20 text-center space-y-4 opacity-10">
-                                     <Edit3 size={100} className="mx-auto" />
-                                     <p className="font-black uppercase tracking-[0.5em] text-xs">Port Idle</p>
+                                  <div className="py-20 text-center space-y-6 opacity-30">
+                                     <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                                        <ShoppingBag size={40} className="text-gray-300" />
+                                     </div>
+                                     <p className="font-black uppercase tracking-[0.4em] text-[10px]">Registry Idle • Waiting for Selection</p>
                                   </div>
                                )}
                             </div>
