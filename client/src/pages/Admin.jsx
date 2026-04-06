@@ -14,14 +14,12 @@ const Admin = () => {
     const [activeTab, setActiveTab] = useState('hub');
     const [orders, setOrders] = useState([]);
     const [products, setProducts] = useState([]);
-    const [ads, setAds] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [syncError, setSyncError] = useState(null);
     
     // UI Local State
     const [editingProduct, setEditingProduct] = useState(null);
-    const [newAd, setNewAd] = useState({ url: '', title: '' });
 
     const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -43,11 +41,7 @@ const Admin = () => {
                 setProducts(res.data);
             } catch (e) { console.error("Products sync failed", e); }
 
-            // 3. Fetch Ads
-            try {
-                const res = await axios.get(`${API_URL}/api/ads`, { timeout: 8000 });
-                setAds(res.data);
-            } catch (e) { console.error("Ads sync failed", e); }
+
 
             // 4. Fetch Users (From Cloud)
             try {
@@ -141,7 +135,7 @@ const Admin = () => {
                     </div>
                     
                     <div className="flex bg-white p-1 rounded-3xl shadow-2xl border border-gray-100 overflow-x-auto scrollbar-hide shrink-0">
-                        {['hub', 'orders', 'products', 'users', 'ads'].map(tab => (
+                        {['hub', 'orders', 'products', 'users'].map(tab => (
                             <button 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -161,7 +155,6 @@ const Admin = () => {
                               {[
                                 { label: 'Logistics Revenue', value: `₹${totalRevenue.toLocaleString()}`, icon: <DollarSign />, color: 'primary' },
                                 { label: 'Active Members', value: users.length, icon: <Users />, color: 'gray-900' },
-                                { label: 'Deployed Ads', value: ads.length, icon: <TrendingUp />, color: 'gray-900' },
                                 { label: 'Total Shipments', value: orders.length, icon: <Truck />, color: 'gray-900' },
                               ].map((stat, i) => (
                                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="bg-white p-10 rounded-[50px] shadow-sm border border-gray-100 flex flex-col items-center space-y-4 hover:shadow-2xl transition-all">
@@ -360,83 +353,7 @@ const Admin = () => {
                         </div>
                     )}
 
-                    {/* ADS TAB */}
-                    {activeTab === 'ads' && (
-                        <div className="space-y-12">
-                            <div className="bg-white rounded-[60px] shadow-2xl border border-gray-100 p-12">
-                                <header className="mb-12 border-b border-gray-50 pb-10 flex items-center justify-between">
-                                   <div className="space-y-1">
-                                     <h3 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">Marketing Deployment</h3>
-                                     <p className="text-gray-400 font-medium text-sm">Site-wide brand alerts and cinematic advertisements.</p>
-                                   </div>
-                                   <Activity className="text-primary opacity-20" size={50} />
-                                </header>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                                    <div className="bg-gray-50 border-2 border-dashed border-gray-100 rounded-[50px] p-12 flex flex-col items-center justify-center space-y-6 hover:border-primary/50 transition-all group cursor-pointer" onClick={() => document.getElementById('ad-url').focus()}>
-                                        <div className="w-16 h-16 bg-white rounded-[25px] flex items-center justify-center text-primary group-hover:scale-110 transition-transform shadow-sm">
-                                            <Plus size={30} />
-                                        </div>
-                                        <div className="text-center">
-                                            <p className="text-xs font-black text-gray-800 uppercase tracking-[0.3em]">New Deployment</p>
-                                            <p className="text-[9px] font-bold text-gray-400 mt-1 italic">Nodal Asset Acquisition</p>
-                                        </div>
-                                    </div>
-                                    
-                                    {ads.map(ad => (
-                                        <div key={ad.id} className="relative bg-white rounded-[50px] border border-gray-50 shadow-md group overflow-hidden">
-                                            <img src={ad.url} className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-[2s]" />
-                                            <div className="p-8 bg-white flex justify-between items-center relative z-10">
-                                                <div>
-                                                    <p className="text-[10px] font-black text-gray-900 uppercase tracking-widest">{ad.title || "Brand Campaign"}</p>
-                                                    <span className="text-[9px] font-black text-green-500 tracking-tight uppercase italic mt-1 inline-block">Asset Live</span>
-                                                </div>
-                                                <button 
-                                                    onClick={() => handleDeleteAd(ad.id)}
-                                                    className="p-3 text-gray-200 hover:text-red-500 transition-colors"
-                                                >
-                                                   <Trash2 size={24} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
 
-                            <div className="bg-white rounded-[60px] shadow-2xl border border-gray-100 p-12 max-w-2xl mx-auto relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
-                                <h4 className="text-xl font-black text-gray-900 mb-10 uppercase tracking-tighter">Deploy New Protocol</h4>
-                                <div className="space-y-8">
-                                    <div className="space-y-2 px-4">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Asset URL Source</label>
-                                        <input 
-                                            id="ad-url"
-                                            className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner"
-                                            placeholder="https://cloud.logi.company/banner.png"
-                                            value={newAd.url}
-                                            onChange={(e) => setNewAd({...newAd, url: e.target.value})}
-                                        />
-                                    </div>
-                                    <div className="space-y-2 px-4">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Protocol Identifier (Title)</label>
-                                        <input 
-                                            className="w-full bg-gray-50 border-none rounded-3xl px-8 py-5 font-black text-gray-900 outline-none focus:ring-2 focus:ring-primary/20 shadow-inner"
-                                            placeholder="Summer Nutrition 2024"
-                                            value={newAd.title}
-                                            onChange={(e) => setNewAd({...newAd, title: e.target.value})}
-                                        />
-                                    </div>
-                                    <div className="px-4">
-                                       <button 
-                                           onClick={handleAddAd}
-                                           className="w-full bg-gray-900 text-white py-6 rounded-[35px] font-black uppercase tracking-[0.3em] text-[10px] flex items-center justify-center space-x-3 active:scale-95 transition-all shadow-2xl hover:bg-primary"
-                                       >
-                                           <Plus size={20} /> <span>Initialize Deployment</span>
-                                       </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

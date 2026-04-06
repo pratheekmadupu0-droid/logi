@@ -14,7 +14,6 @@ import { PRODUCTS } from '../utils/mockData';
 const Home = () => {
   const dispatch = useDispatch();
   const [products, setProducts] = React.useState(PRODUCTS);
-  const [ads, setAds] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -22,12 +21,8 @@ const Home = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const [prodRes, adsRes] = await Promise.all([
-          axios.get(`${API_URL}/api/products`),
-          axios.get(`${API_URL}/api/ads`)
-        ]);
+        const prodRes = await axios.get(`${API_URL}/api/products`);
         if (prodRes.data && prodRes.data.length > 0) setProducts(prodRes.data);
-        setAds(adsRes.data);
       } catch (err) {
         console.error("Home data fetch error:", err);
       } finally {
