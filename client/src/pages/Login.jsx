@@ -5,9 +5,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import toast from 'react-hot-toast';
-import axios from 'axios';
-import { auth, googleProvider } from '../firebase/config';
+import { auth, googleProvider, db } from '../firebase/config';
 import { signInWithPopup, sendSignInLinkToEmail } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const actionCodeSettings = {
     url: "http://localhost:5173/verify", 
@@ -52,14 +51,17 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
-      // Register user in backend
-      await axios.post(`${API_URL}/api/auth/register`, {
-          email: user.email,
-          name: user.displayName,
-          photoURL: user.photoURL,
-          uid: user.uid,
-          loginMethod: 'Google'
-      });
+      const userData = {
+        email: user.email,
+        name: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        loginMethod: 'Google',
+        lastLogin: new Date().toISOString()
+      };
+
+      // Sycn to Firestore
+      await setDoc(doc(db, "users", user.uid), userData, { merge: true });
 
       dispatch(setUser({ 
         email: user.email, 
@@ -67,6 +69,7 @@ const Login = () => {
         photoURL: user.photoURL,
         uid: user.uid
       }));
+      
       toast.success('Successfully Authenticated!');
       if (user.email === 'pratheekmadupu2006@gmail.com') {
         navigate('/choose-interface', { replace: true });

@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { db } from '../firebase/config';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('orders');
@@ -24,18 +26,29 @@ const Admin = () => {
 
     const fetchData = async () => {
         try {
-            const [ordersRes, productsRes, adsRes, usersRes] = await Promise.all([
+            // Fetch basic data from API
+            const [ordersRes, productsRes, adsRes] = await Promise.all([
                 axios.get(`${API_URL}/api/orders`),
                 axios.get(`${API_URL}/api/products`),
-                axios.get(`${API_URL}/api/ads`),
-                axios.get(`${API_URL}/api/auth/users`)
+                axios.get(`${API_URL}/api/ads`)
             ]);
+            
+            // Fetch users from Firebase Firestore
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, orderBy("lastLogin", "desc"));
+            const usersSnapshot = await getDocs(q);
+            const usersList = usersSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
             setOrders(ordersRes.data);
             setProducts(productsRes.data);
             setAds(adsRes.data);
-            setUsers(usersRes.data);
+            setUsers(usersList);
         } catch (err) {
-            toast.error("Error fetching data from server");
+            console.error(err);
+            toast.error("Error fetching data from server or Firebase");
         } finally {
             setLoading(false);
         }
@@ -80,7 +93,7 @@ const Admin = () => {
     if (loading) return (
         <div className="min-h-screen pt-32 flex flex-col items-center justify-center space-y-4">
              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-             <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Authenticating Server...</p>
+             <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Authenticating Hub...</p>
         </div>
     );
 
@@ -91,7 +104,7 @@ const Admin = () => {
                 <header className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between space-y-4 md:space-y-0">
                     <div>
                         <h1 className="text-4xl font-black text-gray-900 tracking-tighter">Business Console</h1>
-                        <p className="text-gray-500 font-medium">Logi Operational Overview & Logistics Management.</p>
+                        <p className="text-gray-500 font-medium">Logi Operational Overview & Cloud Member Management.</p>
                     </div>
                     <div className="flex bg-white p-1 rounded-3xl shadow-sm border border-gray-100 overflow-x-auto">
                         {['orders', 'products', 'users', 'ads'].map(tab => (
@@ -186,10 +199,10 @@ const Admin = () => {
                         <div className="bg-white rounded-[40px] border border-gray-100 shadow-xl overflow-hidden">
                             <div className="p-8 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
                                 <h3 className="text-xl font-black text-gray-900 flex items-center">
-                                    <Users className="mr-3 text-primary" /> Member Directory
+                                    <Users className="mr-3 text-primary" /> Cloud Member Directory
                                 </h3>
-                                <span className="bg-primary/10 text-primary px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                                    {users.length} AUTHENTICATED USERS
+                                <span className="bg-primary/10 text-primary px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-center">
+                                    {users.length} FIREBASE AUTHENTICATED
                                 </span>
                             </div>
                             <div className="overflow-x-auto">
@@ -199,7 +212,7 @@ const Admin = () => {
                                             <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Profile Identity</th>
                                             <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Authentication Context</th>
                                             <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Network ID</th>
-                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Session Activity</th>
+                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Active Timestamp</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-50">
@@ -237,9 +250,9 @@ const Admin = () => {
                                                 <td className="p-6">
                                                     <div className="space-y-1">
                                                         <div className="flex items-center text-[10px] font-black text-gray-900 uppercase tracking-tight">
-                                                            <Clock size={10} className="mr-1.5 text-primary" /> Last Login
+                                                            <Clock size={10} className="mr-1.5 text-primary" /> Cloud Update
                                                         </div>
-                                                        <p className="text-[11px] font-bold text-gray-400">{new Date(user.lastLogin).toLocaleString()}</p>
+                                                        <p className="text-[11px] font-bold text-gray-400">{user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}</p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -251,7 +264,7 @@ const Admin = () => {
                                         <div className="w-16 h-16 bg-gray-50 rounded-full mx-auto flex items-center justify-center text-gray-300">
                                             <Users size={30} />
                                         </div>
-                                        <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Awaiting First Community Member.</p>
+                                        <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Cloud Registry is Currently Empty.</p>
                                     </div>
                                 )}
                             </div>

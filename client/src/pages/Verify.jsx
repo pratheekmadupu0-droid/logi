@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 import { isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import { motion } from 'framer-motion';
 import { Loader2, ShieldCheck, Mail, ChevronRight } from 'lucide-react';
-import axios from 'axios';
+import { doc, setDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 const Verify = () => {
@@ -15,7 +15,6 @@ const Verify = () => {
   const [showEmailInput, setShowEmailInput] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const handleVerify = async () => {
@@ -37,11 +36,12 @@ const Verify = () => {
             uid: result.user.uid,
             name: result.user.displayName || result.user.email?.split('@')[0],
             photoURL: result.user.photoURL,
-            loginMethod: 'Email Link'
+            loginMethod: 'Email Link',
+            lastLogin: new Date().toISOString()
           };
 
-          // Register in backend
-          await axios.post(`${API_URL}/api/auth/register`, userData);
+          // Firestore Registry Update
+          await setDoc(doc(db, "users", result.user.uid), userData, { merge: true });
 
           dispatch(setUser({
             email: userData.email,
@@ -69,7 +69,7 @@ const Verify = () => {
     };
 
     handleVerify();
-  }, [navigate, dispatch, API_URL]);
+  }, [navigate, dispatch]);
 
   const handleManualSignIn = async (e) => {
     e.preventDefault();
@@ -83,11 +83,12 @@ const Verify = () => {
         uid: result.user.uid,
         name: result.user.displayName || result.user.email?.split('@')[0],
         photoURL: result.user.photoURL,
-        loginMethod: 'Email Link'
+        loginMethod: 'Email Link',
+        lastLogin: new Date().toISOString()
       };
 
-      // Register in backend
-      await axios.post(`${API_URL}/api/auth/register`, userData);
+      // Firestore Registry Update
+      await setDoc(doc(db, "users", result.user.uid), userData, { merge: true });
 
       dispatch(setUser({
         email: userData.email,
