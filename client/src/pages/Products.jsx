@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Filter, Search, ChevronDown, Check, Star, ShoppingCart, Eye, SlidersHorizontal } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { Filter, Search, ChevronDown, Check, Star, ShoppingCart, Eye, SlidersHorizontal, ArrowRight } from 'lucide-react';
+import { useSearchParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
@@ -14,7 +14,12 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('cat') || 'All');
   const [sortBy, setSortBy] = useState('Popular');
   const [showFilters, setShowFilters] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([
+    { id: 1, name: "Traditional Ragi Malt Powder", price: 250, image: "https://i.ibb.co/68vMM4y3/product1.png", category: "Malt", rating: 4.9 },
+    { id: 2, name: "Multi-Millet Health Flour", price: 350, image: "https://i.ibb.co/YBxS2Nf8/product1.png", category: "Flour", rating: 4.8 },
+    { id: 3, name: "Sprouted Ragi Baby Cereal", price: 180, image: "https://i.ibb.co/68vMM4y3/product1.png", category: "Child", rating: 5.0 },
+    { id: 4, name: "Organic Little Millet Rice", price: 150, image: "https://i.ibb.co/YBxS2Nf8/product1.png", category: "Rice", rating: 4.7 }
+  ]);
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -25,10 +30,15 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const { data } = await axios.get(`${API_URL}/api/products`);
-        setAllProducts(data);
-        setProducts(data);
+        if (data && data.length > 0) {
+            setAllProducts(data);
+            setProducts(data);
+        } else {
+            setProducts(allProducts);
+        }
       } catch (err) {
-          toast.error("Failed to load products");
+          console.error("Fetch failed, using static data");
+          setProducts(allProducts);
       } finally {
           setLoading(false);
       }
@@ -51,7 +61,7 @@ const Products = () => {
       filtered = [...filtered].sort((a,b) => b.price - a.price);
     }
     setProducts(filtered);
-  }, [selectedCategory, sortBy, searchQuery]);
+  }, [selectedCategory, sortBy, searchQuery, allProducts]);
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
@@ -59,161 +69,78 @@ const Products = () => {
   };
 
   return (
-    <div className="bg-[#FCFBFA] min-h-screen pt-28 pb-20">
-      <div className="section-padding">
-        {/* Header */}
-        <div className="flex flex-col md:row items-center justify-between mb-12 space-y-4 md:space-y-0">
+    <div className="bg-[#FCFBFA] min-h-screen pt-36 pb-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Gallery Header */}
+        <div className="flex flex-col md:row items-center justify-between mb-16 space-y-6 md:space-y-0">
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Our Collection</h1>
-            <p className="text-gray-500 mt-2">Showing {products.length} premium products</p>
+            <p className="text-primary font-black uppercase tracking-[0.4em] text-[10px] mb-2">Nutritional Library</p>
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter uppercase leading-none">Product <br />Essential.<span className="text-primary italic">Gallery</span></h1>
           </div>
           
-          <div className="flex items-center space-x-4 w-full md:w-auto">
+          <div className="flex items-center space-x-4 w-full md:w-auto bg-white p-2 rounded-[40px] shadow-sm border border-gray-100">
             <div className="relative flex-grow md:w-64">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input 
                 type="text" 
-                placeholder="Search products..." 
-                className="w-full bg-white border border-gray-100 rounded-full pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm"
+                placeholder="Search Database..." 
+                className="w-full bg-transparent rounded-full pl-16 pr-6 py-4 focus:outline-none font-bold text-sm tracking-tight"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <button 
-              onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden bg-white p-3 rounded-full border border-gray-100 shadow-sm text-gray-600"
-            >
-              <SlidersHorizontal size={20} />
-            </button>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-[250px_1fr] gap-12">
-          {/* Filters (Desktop) */}
-          <aside className="hidden md:block space-y-10">
+        <div className="grid md:grid-cols-[200px_1fr] gap-16">
+          {/* Sidebar */}
+          <aside className="hidden md:block space-y-12">
             <div>
-              <h3 className="font-bold text-gray-900 mb-6 flex items-center">
-                <Filter size={18} className="mr-2" /> Categories
-              </h3>
-              <div className="space-y-3">
-                <button 
-                  onClick={() => setSelectedCategory('All')} 
-                  className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl transition-all ${selectedCategory === 'All' ? 'bg-primary text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
-                >
-                  <span className="font-medium text-sm">All Products</span>
-                  {selectedCategory === 'All' && <Check size={16} />}
-                </button>
-                {['Malt', 'Flour', 'Child Nutrition', 'Rice'].map(cat => (
-                  <button 
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)} 
-                    className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl transition-all ${selectedCategory === cat ? 'bg-primary text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
-                  >
-                    <span className="font-medium text-sm">{cat}</span>
-                    {selectedCategory === cat && <Check size={16} />}
-                  </button>
+              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">Directory</h3>
+              <div className="space-y-2">
+                {['All', 'Malt', 'Flour', 'Child', 'Rice'].map(cat => (
+                   <button key={cat} onClick={() => setSelectedCategory(cat)} className={`w-full text-left p-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all ${selectedCategory === cat ? 'bg-primary text-white shadow-xl' : 'text-gray-400 hover:text-gray-900'}`}>{cat}</button>
                 ))}
               </div>
             </div>
-
+            
             <div>
-              <h3 className="font-bold text-gray-900 mb-6">Price Range</h3>
-              <div className="space-y-4">
-                <input type="range" className="w-full accent-primary" />
-                <div className="flex items-center justify-between text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  <span>₹0</span>
-                  <span>₹350</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-gray-900 mb-6">Sort By</h3>
-              <select 
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full bg-white border border-gray-100 rounded-xl px-4 py-3 focus:outline-none shadow-sm cursor-pointer"
-              >
-                <option>Popular</option>
-                <option>Newest</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-              </select>
+               <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">Sequence</h3>
+               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full bg-white border border-gray-100 p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer">
+                  <option>Popular</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+               </select>
             </div>
           </aside>
 
-          {/* Product Grid */}
+          {/* Core Hub */}
           <main>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              <AnimatePresence mode="popLayout">
-                {products.map((product) => (
-                  <motion.div 
-                    layout
-                    key={product.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white p-4 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group"
-                  >
-                    <div className="relative overflow-hidden rounded-[30px] h-72 bg-gray-50 mb-6">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-700" 
-                      />
-                      <div className="absolute inset-x-4 bottom-4 flex items-center justify-center space-x-2 translate-y-16 group-hover:translate-y-0 transition-transform duration-500">
-                        <Link 
-                          to={`/product/${product.id}`}
-                          className="bg-white text-gray-800 p-3 rounded-2xl shadow-lg flex items-center justify-center hover:bg-gray-100"
-                        >
-                          <Eye size={20} />
-                        </Link>
-                        <button 
-                          onClick={() => handleAddToCart(product)}
-                          className="bg-primary text-white p-3 px-6 grow rounded-2xl shadow-lg flex items-center justify-center hover:bg-primary-dark transition-colors font-bold"
-                        >
-                          <ShoppingCart size={20} className="mr-2" /> Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                    
-                    <div className="px-2 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="bg-primary/5 text-primary text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
-                          {product.category}
-                        </span>
-                        <div className="flex items-center space-x-1 text-amber-500">
-                          <Star fill="currentColor" size={12} />
-                          <span className="text-xs font-bold text-gray-900">{product.rating}</span>
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-bold text-gray-900 truncate tracking-tight">{product.name}</h3>
-                      <p className="text-2xl font-black text-primary flex items-baseline">
-                        <span className="text-sm font-bold mr-1">₹</span>
-                        {product.price}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-            
-            {products.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="bg-gray-100 p-8 rounded-full mb-6">
-                  <Search size={40} className="text-gray-400" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
-                <p className="text-gray-500 max-w-xs">We couldn't find any products matching your search or filters.</p>
-                <button 
-                  onClick={() => {setSelectedCategory('All'); setSearchQuery('');}}
-                  className="mt-6 text-primary font-bold hover:underline"
-                >
-                  Clear all filters
-                </button>
-              </div>
-            )}
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <AnimatePresence mode="popLayout">
+                   {products.map((product) => (
+                      <motion.div layout key={product.id} className="p-6 bg-white border border-gray-50 rounded-[50px] hover:shadow-2xl transition-all group">
+                         <div className="relative overflow-hidden rounded-[35px] h-64 bg-gray-50 mb-6 flex items-center justify-center">
+                            <img src={product.image} className="h-full w-full object-contain p-8 group-hover:scale-110 transition-transform duration-700" alt={product.name} />
+                         </div>
+                         <div className="space-y-4">
+                            <div className="flex justify-between items-center bg-gray-50 p-2 px-4 rounded-full">
+                               <span className="text-[9px] font-black uppercase text-primary tracking-widest">{product.category}</span>
+                               <div className="flex items-center text-amber-500 space-x-1">
+                                  <Star size={10} fill="currentColor" />
+                                  <span className="text-[10px] font-black">{product.rating}</span>
+                               </div>
+                            </div>
+                            <h3 className="text-lg font-black text-gray-900 leading-tight uppercase tracking-tight truncate">{product.name}</h3>
+                            <div className="flex items-center justify-between pt-4">
+                               <p className="text-3xl font-black text-primary italic">₹ {product.price}</p>
+                               <button onClick={() => handleAddToCart(product)} className="bg-primary text-white p-4 rounded-3xl active:scale-90 transition-all"><ShoppingCart size={22} /></button>
+                            </div>
+                         </div>
+                      </motion.div>
+                   ))}
+                </AnimatePresence>
+             </div>
           </main>
         </div>
       </div>
