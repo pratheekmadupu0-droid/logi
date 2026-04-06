@@ -31,70 +31,82 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Shop', path: '/shop' },
-    { name: 'About', path: '/#about' },
-    { name: 'Contact', path: '/#contact' },
+    { name: 'Gallery', path: '/shop' },
+    { name: 'Origins', path: '/#about' },
+    { name: 'Connect', path: '/contact' },
     ...(user?.email === 'pratheekmadupu2006@gmail.com' ? [{ name: 'Admin', path: '/admin' }] : []),
   ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Dynamic Offer Banner */}
-      <div className="bg-gray-900 overflow-hidden py-1.5 md:py-2 border-b border-white/5">
+      <div className="bg-primary overflow-hidden py-1.5 md:py-2 border-b border-white/5">
         <div className="flex whitespace-nowrap animate-marquee">
            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white px-8 italic">
-              🌿 FREE SHIPPING ON ORDERS ABOVE ₹500 • 🥣 PURE TRADITIONAL SPROUTS • 💎 10% OFF ON YOUR FIRST ORDER • 🌿 FREE SHIPPING ON ORDERS ABOVE ₹500 • 🥣 PURE TRADITIONAL SPROUTS • 💎 10% OFF ON YOUR FIRST ORDER
+              🌿 BRIDGING ANCIENT PURITY WITH MODERN LOGISTICS • 🥣 SPROUTED NUTRITION • 💎 10% OFF ON FIRST ORDER • 🌿 BRIDGING ANCIENT PURITY WITH MODERN LOGISTICS • 🥣 SPROUTED NUTRITION • 💎 10% OFF ON FIRST ORDER
            </span>
            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white px-8 italic">
-              🌿 FREE SHIPPING ON ORDERS ABOVE ₹500 • 🥣 PURE TRADITIONAL SPROUTS • 💎 10% OFF ON YOUR FIRST ORDER • 🌿 FREE SHIPPING ON ORDERS ABOVE ₹500 • 🥣 PURE TRADITIONAL SPROUTS • 💎 10% OFF ON YOUR FIRST ORDER
+              🌿 BRIDGING ANCIENT PURITY WITH MODERN LOGISTICS • 🥣 SPROUTED NUTRITION • 💎 10% OFF ON FIRST ORDER • 🌿 BRIDGING ANCIENT PURITY WITH MODERN LOGISTICS • 🥣 SPROUTED NUTRITION • 💎 10% OFF ON FIRST ORDER
            </span>
         </div>
       </div>
 
-      <nav className={`transition-all duration-300 ${scrolled ? 'bg-white shadow-sm py-3' : 'bg-white/90 backdrop-blur-md py-4'}`}>
+      <nav className={`transition-all duration-500 ${scrolled ? 'bg-white shadow-2xl py-3 border-b border-primary/5' : 'bg-white/80 backdrop-blur-3xl py-6'}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link to="/" className="flex items-center group">
             <img 
               src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
               alt="LOGI NUTRITIONAL PRODUCT" 
-              className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform" 
+              className="h-10 md:h-12 w-auto object-contain group-hover:scale-110 transition-transform duration-700" 
             />
-            <span className="ml-3 font-black text-xs md:text-lg tracking-tighter text-gray-900 uppercase">LOGI NUTRITIONAL PRODUCT</span>
+            <span className="ml-4 font-black text-xs md:text-xl tracking-tighter text-primary uppercase leading-none">LOGI <br /> NUTRITIONAL</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-10">
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.path} 
-                className={`text-[10px] font-black uppercase tracking-widest transition-colors hover:text-primary ${location.pathname === link.path ? 'text-primary' : 'text-gray-500'}`}
-              >
-                {link.name}
-              </a>
+              link.path.startsWith('/#') ? (
+                <a 
+                  key={link.name} 
+                  href={link.path} 
+                  className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-primary transition-all relative group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-500" />
+                </a>
+              ) : (
+                <Link 
+                  key={link.name} 
+                  to={link.path} 
+                  className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all relative group ${location.pathname === link.path ? 'text-primary' : 'text-gray-400 hover:text-primary'}`}
+                >
+                  {link.name}
+                  <span className={`absolute -bottom-1 left-0 h-[2px] bg-primary transition-all duration-500 ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+                </Link>
+              )
             ))}
           </div>
 
-          <div className="flex items-center space-x-4">
-             <Link to={user ? "/profile" : "/login"} className="text-gray-600 hover:text-primary transition-all">
+          <div className="flex items-center space-x-6">
+             <Link to={user ? "/profile" : "/login"} className="text-gray-400 hover:text-primary transition-all">
                 {user ? (
-                   <div className="flex items-center space-x-2 bg-gray-50 border border-gray-100 p-1 pr-3 rounded-full hover:shadow-md transition-all">
-                     {user.photoURL ? (
-                        <img src={user.photoURL} className="w-7 h-7 rounded-full border border-white" alt="profile" />
-                     ) : (
-                        <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-[10px] uppercase font-black">{user.name?.charAt(0) || 'U'}</div>
-                     )}
-                     <span className="hidden md:block text-[9px] font-black uppercase text-gray-400">{user.name?.split(' ')[0]}</span>
+                   <div className="flex items-center space-x-3 bg-primary/5 border border-primary/10 p-1.5 pr-4 rounded-full hover:shadow-xl transition-all">
+                      {user.photoURL ? (
+                         <img src={user.photoURL} className="w-8 h-8 rounded-full border border-white shadow-sm" alt="profile" />
+                      ) : (
+                         <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] uppercase font-black">{user.name?.charAt(0) || 'U'}</div>
+                      )}
+                      <span className="hidden lg:block text-[10px] font-black uppercase text-primary tracking-widest">{user.name?.split(' ')[0]}</span>
                    </div>
                 ) : (
-                   <User size={20} />
+                   <User size={22} className="hover:scale-110 transition-transform" />
                 )}
              </Link>
-             <Link to="/cart" className="relative text-gray-600">
-                <ShoppingCart size={20} />
-                {cartTotal > 0 && <span className="absolute -top-2 -right-2 bg-primary text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full font-black">{cartTotal}</span>}
+             <Link to="/cart" className="relative text-gray-400 hover:text-primary transition-all">
+                <ShoppingCart size={22} className="hover:scale-110 transition-transform" />
+                {cartTotal > 0 && <span className="absolute -top-3 -right-3 bg-primary text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-black shadow-lg border-2 border-white">{cartTotal}</span>}
              </Link>
-             {user && <button onClick={handleLogout} className="text-gray-400 hover:text-red-500 transition-colors"><LogOut size={18} /></button>}
-             <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
+             {user && <button onClick={handleLogout} className="text-gray-300 hover:text-red-500 transition-colors"><LogOut size={20} /></button>}
+             <button className="md:hidden text-primary" onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={28} /> : <Menu size={28} />}</button>
           </div>
         </div>
       </nav>
@@ -102,10 +114,14 @@ const Navbar = () => {
       {/* Mobile Nav */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, x: 200 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 200 }} className="absolute top-0 right-0 w-64 h-screen bg-white shadow-2xl z-[100] md:hidden p-8 flex flex-col space-y-6">
-             <button onClick={() => setIsOpen(false)} className="self-end"><X size={24} /></button>
+          <motion.div initial={{ opacity: 0, x: 200 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 200 }} className="absolute top-0 right-0 w-80 h-screen bg-white shadow-3xl z-[100] md:hidden p-12 flex flex-col space-y-8">
+             <button onClick={() => setIsOpen(false)} className="self-end text-primary mb-12"><X size={32} /></button>
              {navLinks.map((link) => (
-               <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-sm font-black uppercase tracking-widest text-gray-600 hover:text-primary transition-colors">{link.name}</a>
+                link.path.startsWith('/#') ? (
+                  <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase tracking-tighter text-gray-400 hover:text-primary transition-colors">{link.name}</a>
+                ) : (
+                  <Link key={link.name} to={link.path} onClick={() => setIsOpen(false)} className={`text-2xl font-black uppercase tracking-tighter transition-colors ${location.pathname === link.path ? 'text-primary' : 'text-gray-400 hover:text-primary'}`}>{link.name}</Link>
+                )
              ))}
           </motion.div>
         )}

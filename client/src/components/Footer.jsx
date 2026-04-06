@@ -4,68 +4,67 @@ import { Globe, Share2, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-dark text-white pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-primary text-white pt-32 pb-12 rounded-t-[100px] overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+      
+      <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-24">
         {/* Brand */}
-        <div className="space-y-6">
-          <Link to="/" className="text-3xl font-extrabold tracking-tight flex items-center group">
-            <span className="bg-white text-primary p-1 rounded-lg mr-2 group-hover:scale-110 transition-transform">L</span>
-            LOGI
+        <div className="space-y-10">
+          <Link to="/" className="flex flex-col group">
+             <div className="flex items-center space-x-3 mb-2">
+                <img src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" className="h-10 invert brightness-0" alt="Logi" />
+                <span className="text-2xl font-black tracking-tighter uppercase italic">Logi.</span>
+             </div>
+             <p className="text-white/60 text-xs font-black uppercase tracking-[0.2em] leading-relaxed">
+                Bridging Ancient Purity <br /> With Modern Logistics.
+             </p>
           </Link>
-          <p className="text-gray-300 text-sm leading-relaxed max-w-sm">
-            Fuel Your Body. Elevate Your Life. We provide premium nutritional products crafted with scientific precision and organic purity.
-          </p>
-          <div className="flex space-x-4">
-            <a href="#" className="hover:text-primary-light transition-colors"><Globe size={20} /></a>
-            <a href="#" className="hover:text-primary-light transition-colors"><Share2 size={20} /></a>
-            <a href="#" className="hover:text-primary-light transition-colors"><Mail size={20} /></a>
+          
+          <div className="flex space-x-6">
+            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-primary transition-all duration-500"><Share2 size={18} /></a>
+            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-primary transition-all duration-500"><Mail size={18} /></a>
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* Intelligence Nodes */}
         <div>
-          <h4 className="text-lg font-bold mb-6">Quick Links</h4>
-          <ul className="space-y-3">
-            <li><Link to="/shop" className="text-gray-300 hover:text-white transition-colors">Shop All</Link></li>
-            <li><Link to="/#about" className="text-gray-300 hover:text-white transition-colors">Our Story</Link></li>
-            <li><Link to="/#contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
-            <li><Link to="/login" className="text-gray-300 hover:text-white transition-colors">Member Area</Link></li>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-10">Intelligence</h4>
+          <ul className="space-y-4">
+            <li><Link to="/shop" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Product Gallery</Link></li>
+            <li><a href="/#about" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Our Origins</a></li>
+            <li><Link to="/contact" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Connect Node</Link></li>
           </ul>
         </div>
 
         {/* Categories */}
         <div>
-          <h4 className="text-lg font-bold mb-6">Categories</h4>
-          <ul className="space-y-3">
-            <li><Link to="/shop?cat=Protein" className="text-gray-300 hover:text-white transition-colors">Protein</Link></li>
-            <li><Link to="/shop?cat=Vitamins" className="text-gray-300 hover:text-white transition-colors">Vitamins</Link></li>
-            <li><Link to="/shop?cat=Supplements" className="text-gray-300 hover:text-white transition-colors">Supplements</Link></li>
-            <li><Link to="/shop?cat=Fitness" className="text-gray-300 hover:text-white transition-colors">Fitness</Link></li>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-10">Inventory</h4>
+          <ul className="space-y-4">
+            <li><Link to="/shop?cat=Malt Powder" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all">Malt Powders</Link></li>
+            <li><Link to="/shop?cat=Flour" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all">Natural Flours</Link></li>
+            <li><Link to="/shop?cat=Rice" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all">Diabetic Rice</Link></li>
+            <li><Link to="/shop?cat=Teas" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all">Health Teas</Link></li>
           </ul>
         </div>
 
-        {/* Newsletter */}
-        <div>
-          <h4 className="text-lg font-bold mb-6">Newsletter</h4>
-          <p className="text-gray-300 text-sm mb-4">Subscribe for exclusive offers and health tips.</p>
-          <div className="flex bg-white/10 rounded-full p-1 border border-white/20">
-            <input 
-              type="email" 
-              placeholder="Your email" 
-              className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder:text-gray-500" 
-            />
-            <button className="bg-white text-primary px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors">
-              Join
-            </button>
-          </div>
+        {/* Global Node */}
+        <div className="space-y-8">
+           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Global Logistics</h4>
+           <div className="space-y-4 bg-white/5 p-8 rounded-[40px] border border-white/10">
+              <div className="flex items-center space-x-4">
+                 <Globe size={18} className="text-secondary" />
+                 <span className="text-[10px] font-black uppercase tracking-widest">BENGALURU, INDIA</span>
+              </div>
+              <p className="text-[9px] font-medium text-white/50 leading-relaxed uppercase tracking-wider">Serving 10,000+ conscious households with sprouted purity.</p>
+           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/10 pt-8 max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:row items-center justify-between text-xs text-gray-400">
-        <p>© 2026 Logi Nutritional Products. All rights reserved.</p>
-        <div className="flex space-x-6 mt-4 md:mt-0">
-          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+      <div className="border-t border-white/10 pt-12 max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between">
+        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">© 2026 LOGI NUTRITIONAL LOGISTICS HUB. ALL PROTOCOLS RESERVED.</p>
+        <div className="flex space-x-10 mt-6 md:mt-0 text-[9px] font-black uppercase tracking-[0.3em] text-white/30">
+          <a href="#" className="hover:text-white transition-all">Privacy Node</a>
+          <a href="#" className="hover:text-white transition-all">Terms Node</a>
         </div>
       </div>
     </footer>

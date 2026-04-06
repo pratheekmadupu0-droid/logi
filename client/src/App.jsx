@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Admin from './pages/Admin';
 import AdminLanding from './pages/AdminLanding';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Products />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/choose-interface" element={<AdminLanding />} />
           <Route path="/product/:id" element={<ProductDetail />} />
