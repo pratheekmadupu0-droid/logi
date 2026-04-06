@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, CircleCheck, TrendingUp, Star, Leaf, Heart, Coffee } from 'lucide-react';
+import { 
+  ArrowRight, ShieldCheck, CircleCheck, TrendingUp, Star, 
+  Leaf, Heart, Coffee, Phone, Mail, MapPin, Send
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -121,7 +124,7 @@ const Home = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="absolute inset-0"
-                style={{ display: idx === 0 ? 'block' : 'none' }} // Simple logic for first ad
+                style={{ display: idx === 0 ? 'block' : 'none' }} 
               >
                 <img src={ad.url} className="w-full h-full object-cover" alt={ad.title} />
                 <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center p-6 text-white">
@@ -217,7 +220,7 @@ const Home = () => {
       </section>
 
       {/* Brand Story / About Section */}
-      <section className="section-padding bg-white grid md:grid-cols-2 gap-16 items-center">
+      <section id="about" className="section-padding bg-white grid md:grid-cols-2 gap-16 items-center">
         <div className="relative h-[400px] md:h-[600px] rounded-[50px] overflow-hidden shadow-2xl">
           <img 
             src="https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png" 
@@ -247,6 +250,96 @@ const Home = () => {
           <button className="btn btn-secondary py-4 px-10 rounded-2xl text-lg">Our Nutritional Philosophy</button>
         </div>
       </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="section-padding bg-[#FDFCF6]">
+        <div className="bg-gray-900 rounded-[60px] p-10 md:p-20 overflow-hidden relative">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[100px] rounded-full" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 blur-[100px] rounded-full" />
+          
+          <div className="relative z-10 grid lg:grid-cols-2 gap-16">
+            <div className="space-y-10">
+               <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">Connect with <br /><span className="text-primary">The Logi Team</span></h2>
+                  <p className="text-gray-400 text-lg max-w-md">Have questions about our nutritional profiles or bulk orders? We're here to help you choose the best for your lifestyle.</p>
+               </div>
+               
+               <div className="space-y-6">
+                  <div className="flex items-center space-x-5 group">
+                     <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <Phone size={24} />
+                     </div>
+                     <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Call Us Directly</p>
+                        <p className="text-white text-xl font-bold">+91 98765 43210</p>
+                     </div>
+                  </div>
+                  <div className="flex items-center space-x-5 group">
+                     <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <Mail size={24} />
+                     </div>
+                     <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Support Email</p>
+                        <p className="text-white text-xl font-bold">purity@logi.company</p>
+                     </div>
+                  </div>
+                  <div className="flex items-center space-x-5 group">
+                     <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <MapPin size={24} />
+                     </div>
+                     <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Our Facility</p>
+                        <p className="text-white text-xl font-bold">Bengaluru, Karnataka, India</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-8 md:p-12">
+               <form className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-4">Full Name</label>
+                       <input className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold focus:border-primary transition-all outline-none" placeholder="John Doe" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-4">Email Address</label>
+                       <input className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold focus:border-primary transition-all outline-none" placeholder="john@example.com" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-4">Subject</label>
+                     <input className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold focus:border-primary transition-all outline-none" placeholder="Nutritional Advice / Bulk Query" />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-4">Your Message</label>
+                     <textarea className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold focus:border-primary transition-all outline-none h-32" placeholder="Tell us more..." />
+                  </div>
+                  <button className="w-full bg-primary text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-xl shadow-primary/20 flex items-center justify-center space-x-3 group hover:scale-[1.02] active:scale-98 transition-all">
+                     <span>Transmit Message</span>
+                     <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
+               </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Branding */}
+      <footer className="py-20 bg-white border-t border-gray-50 overflow-hidden">
+        <div className="section-padding flex flex-col items-center space-y-12">
+            <Link to="/">
+              <img src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" className="h-24 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700" alt="Logi" />
+            </Link>
+            <div className="flex flex-wrap justify-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+               <Link to="/shop" className="hover:text-primary transition-colors">Shop All</Link>
+               <Link to="/#about" className="hover:text-primary transition-colors">Origins</Link>
+               <Link to="/#contact" className="hover:text-primary transition-colors">Logistics</Link>
+               <Link to="/privacy" className="hover:text-primary transition-colors">Terms</Link>
+            </div>
+            <p className="text-[9px] font-black uppercase tracking-[0.5em] text-gray-300">LOGI NUTRITIONAL PRODUCTS © 2026</p>
+        </div>
+      </footer>
     </div>
   );
 };
