@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { PRODUCTS } from '../utils/mockData';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -28,20 +29,27 @@ const ProductDetail = () => {
                 }
             } catch (err) {
                 console.error("Detail fetch failed, using fallback");
-                // Static fallback for critical UI stability
-                const fallback = {
-                    id: id,
-                    name: "Logi Nutritional Essential",
-                    price: 250,
-                    image: "https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png",
-                    category: "Premium",
-                    description: "Our signature nutritional formula, slow-roasted and stone-ground to preserve the life force of ancient grains. Designed for members who demand the highest purity.",
-                    rating: 4.9,
-                    reviews: "120+",
-                    benefits: ["Stone Ground", "Organic", "Low-GI"],
-                    nutrients: ["Protein: 12g", "Iron: 4mg", "Fiber: 8g"]
-                };
-                setProduct(fallback);
+                // Static fallback searched by ID for accurate display
+                const fallback = PRODUCTS.find(p => p.id === parseInt(id));
+                if (fallback) {
+                    setProduct(fallback);
+                    if (fallback.variants && fallback.variants.length > 0) {
+                        setSelectedVariant(fallback.variants[0]);
+                    }
+                } else {
+                    // Critical fallback if ID not found even in mockData
+                    setProduct({
+                        id: id,
+                        name: "Logi Nutritional Essential",
+                        price: 250,
+                        image: "https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png",
+                        category: "Premium",
+                        description: "Our signature nutritional formula, slow-roasted and stone-ground to preserve the life force of ancient grains. Designed for members who demand the highest purity.",
+                        rating: 4.9,
+                        benefits: ["Stone Ground", "Organic", "Low-GI"],
+                        nutrients: ["Protein: 12g", "Iron: 4mg", "Fiber: 8g"]
+                    });
+                }
             } finally {
                 setLoading(false);
             }

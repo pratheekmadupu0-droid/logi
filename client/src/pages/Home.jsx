@@ -9,32 +9,11 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { addItem } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
+import { PRODUCTS } from '../utils/mockData';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = React.useState([
-    {
-      id: 1,
-      name: 'Nutritious Ragi Malt Powder-500g',
-      image: 'https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png',
-      category: 'Malt Powder',
-      price: 250
-    },
-    {
-      id: 2,
-      name: 'Nutritional Multimillet Flour-500g',
-      image: 'https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png',
-      category: 'Flour',
-      price: 250
-    },
-    {
-      id: 3,
-      name: 'LOGI Low GI Rice',
-      image: 'https://i.ibb.co/5xtSdfNL/Gemini-Generated-Image-uedgjwuedgjwuedg.png',
-      category: 'Rice',
-      price: 200
-    }
-  ]);
+  const [products, setProducts] = React.useState(PRODUCTS);
   const [ads, setAds] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 

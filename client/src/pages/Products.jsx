@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 
+import { PRODUCTS } from '../utils/mockData';
+
 const Products = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -14,75 +16,7 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('cat') || 'All');
   const [sortBy, setSortBy] = useState('Popular');
   const [showFilters, setShowFilters] = useState(false);
-  const [allProducts, setAllProducts] = useState([
-    {
-      id: 1,
-      name: 'Nutritious Ragi Malt Powder-500g',
-      image: 'https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png',
-      description: 'Controls diabetes, lowers LDL, regulates blood pressure, boosts testosterone, helps in weight loss, improves immunity, increases bone & muscle strength.',
-      category: 'Malt Powder',
-      price: 250,
-      rating: 4.9
-    },
-    {
-      id: 2,
-      name: 'Nutritional Multimillet Flour-500g',
-      image: 'https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png',
-      description: 'Delicious & Nutritious! Low GI helps regulate diabetes, supports weight management, improves immunity & makes body healthy.',
-      category: 'Flour',
-      price: 250,
-      rating: 4.8
-    },
-    {
-      id: 3,
-      name: 'LOGI Low GI Rice',
-      image: 'https://i.ibb.co/5xtSdfNL/Gemini-Generated-Image-uedgjwuedgjwuedg.png',
-      description: 'Low GI for Smart Living! Diabetic friendly, good for all ages, supports weight control, rich in protein & nutrients.',
-      category: 'Rice',
-      price: 200,
-      rating: 4.9,
-      variants: [
-        { size: '1kg', price: 200 },
-        { size: '5kg', price: 1000 }
-      ]
-    },
-    {
-      id: 4,
-      name: 'Chocolate Multimillet Malt-500g',
-      image: 'https://i.ibb.co/N2wKvKYx/Gemini-Generated-Image-5g26d05g26d05g26.png',
-      description: 'Energy Boost! Delicious chocolate taste with packed nutrition from grains. Strong & Smart formula packed with grains.',
-      category: 'Malt Powder',
-      price: 350,
-      rating: 4.7
-    },
-    {
-      id: 5,
-      name: 'Nutritious Multi Millet Malt Powder-500g',
-      image: 'https://i.ibb.co/7tqxRpV3/Gemini-Generated-Image-qn6xfaqn6xfaqn6x.png',
-      description: 'Delicious multi-millet malt blended with nuts and super grains. Low GI formulation supports steady energy.',
-      category: 'Malt Powder',
-      price: 250,
-      rating: 4.8
-    },
-    {
-      id: 6,
-      name: 'Nutritional Ragi Millet Flour-500g',
-      image: 'https://i.ibb.co/DH9BFdbx/Gemini-Generated-Image-4s7ep64s7ep64s7e.png',
-      description: 'High-quality ragi flour with low GI to help regulate blood sugar. Supports weight management and boosts immunity.',
-      category: 'Flour',
-      price: 200,
-      rating: 4.9
-    },
-    {
-      id: 7,
-      name: 'Nutritional Millettea-500g',
-      image: '/milletea.png',
-      description: 'A refreshing and healthy millet-based tea blend. Rich in antioxidants and natural goodness.',
-      category: 'Teas',
-      price: 250,
-      rating: 4.7
-    }
-  ]);
+  const [allProducts, setAllProducts] = useState(PRODUCTS);
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
