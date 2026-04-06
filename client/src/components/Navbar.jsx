@@ -29,9 +29,12 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-extrabold tracking-tight text-primary flex items-center group">
-          <span className="bg-primary text-white p-1 rounded-lg mr-2 group-hover:scale-110 transition-transform">L</span>
-          LOGI
+        <Link to="/" className="flex items-center group">
+          <img 
+            src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
+            alt="Logi" 
+            className="h-10 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform" 
+          />
         </Link>
 
         {/* Desktop Nav */}

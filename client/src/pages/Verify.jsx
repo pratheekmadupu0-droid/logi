@@ -83,7 +83,13 @@ const Verify = () => {
         className="w-full max-w-lg bg-white rounded-[60px] shadow-2xl border border-gray-50 p-10 md:p-14 text-center space-y-8"
       >
         <div className="space-y-4">
-          <div className="text-4xl font-black tracking-tighter text-primary">LOGI</div>
+          <div className="mx-auto flex justify-center">
+             <img 
+               src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
+               alt="Logi" 
+               className="h-16 w-auto object-contain" 
+             />
+          </div>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">
             {loading ? 'Verifying Identity' : 'Secure Authorization'}
           </h1>

@@ -77,7 +77,13 @@ const Login = () => {
         className="w-full max-w-lg bg-white rounded-[60px] shadow-2xl border border-gray-50 p-10 md:p-14 relative z-10"
       >
         <div className="text-center space-y-4 mb-10">
-          <Link to="/" className="text-5xl font-black tracking-tighter text-primary">LOGI</Link>
+          <Link to="/" className="inline-block">
+            <img 
+               src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
+               alt="Logi" 
+               className="h-16 w-auto mx-auto object-contain" 
+            />
+          </Link>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Member Access</h1>
           <p className="text-gray-500 font-medium text-sm">Purity & Nutrition in Every Link.</p>
         </div>
