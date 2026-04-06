@@ -1,0 +1,17 @@
+node_modules/
+.env
+.DS_Store
+dist/
+dist-ssr/
+*.local
+.gemini/
+build/
+.next/
+.cache/
+.npm/
+.vscode/
+package-lock.json
+client/node_modules/
+server/node_modules/
+client/dist/
+server/dist/
