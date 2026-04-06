@@ -39,7 +39,7 @@
   {
     "id": 4,
     "name": "Chocolate Multimillet Malt-500g",
-    "image": "https://i.ibb.co/N2wKvKYx/Gemini-Generated-Image-5g26d05g26d05g26.png",
+    "image": "/chocolateafront.png",
     "description": "Energy Boost! Delicious chocolate taste with packed nutrition from grains. Strong & Smart formula packed with grains. Rich chocolate taste, perfect for kids & adults.",
     "category": "Malt Powder",
     "price": 350,
@@ -47,17 +47,7 @@
     "benefits": ["Energy Boost", "Kids Favorite", "Grain Packed"],
     "nutrients": ["Cocoa: Pure", "Iron: 3mg", "Protein: 6g"]
   },
-  {
-    "id": 5,
-    "name": "Nutritious Multi Millet Malt Powder-500g",
-    "image": "https://i.ibb.co/7tqxRpV3/Gemini-Generated-Image-qn6xfaqn6xfaqn6x.png",
-    "description": "Delicious multi-millet malt blended with nuts and super grains. Low GI formulation supports steady energy, aids weight management, and strengthens immunity — ideal for kids and adults as a daily nutritious drink.",
-    "category": "Malt Powder",
-    "price": 250,
-    "rating": 4.8,
-    "benefits": ["Steady Energy", "Weight Management", "Nuts Blended"],
-    "nutrients": ["Vitamins: A,D,E", "Zinc: 2mg", "Protein: 7.5g"]
-  },
+
   {
     "id": 6,
     "name": "Nutritional Ragi Millet Flour-500g",
