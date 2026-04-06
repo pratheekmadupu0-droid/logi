@@ -13,7 +13,27 @@ import toast from 'react-hot-toast';
 const Home = () => {
   const dispatch = useDispatch();
   const [products, setProducts] = React.useState([
-    { id: 1, name: "Logi Ragi Malt", price: 250, image: "https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png", category: "Malt" }
+    {
+      id: 1,
+      name: 'Nutritious Ragi Malt Powder-500g',
+      image: 'https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png',
+      category: 'Malt Powder',
+      price: 250
+    },
+    {
+      id: 2,
+      name: 'Nutritional Multimillet Flour-500g',
+      image: 'https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png',
+      category: 'Flour',
+      price: 250
+    },
+    {
+      id: 3,
+      name: 'LOGI Low GI Rice',
+      image: 'https://i.ibb.co/5xtSdfNL/Gemini-Generated-Image-uedgjwuedgjwuedg.png',
+      category: 'Rice',
+      price: 200
+    }
   ]);
   const [ads, setAds] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -68,7 +88,7 @@ const Home = () => {
       {/* Featured Categories */}
       <section className="py-24 max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {['Malt', 'Flour', 'Child', 'Rice'].map((cat, i) => (
+          {['Malt Powder', 'Flour', 'Rice', 'Teas'].map((cat, i) => (
              <Link key={i} to={`/shop?cat=${cat}`} className="group relative overflow-hidden rounded-[50px] aspect-square bg-gray-50 p-10 flex flex-col items-center justify-center border border-gray-50 hover:border-primary transition-all shadow-sm">
                 <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 mb-2">{cat}</span>
                 <h3 className="text-2xl font-black text-gray-900 uppercase">Gallery</h3>
