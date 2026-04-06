@@ -31,3 +31,12 @@ body {
 .section-padding {
   @apply py-16 px-4 md:px-8 max-w-7xl mx-auto;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
