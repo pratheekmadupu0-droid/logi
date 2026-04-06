@@ -201,7 +201,7 @@ const ProductDetail = () => {
                                 {product.benefits?.map((b, i) => (
                                    <div key={i} className="flex items-center justify-between p-5 bg-gray-50 rounded-3xl">
                                       <span className="font-black text-xs uppercase tracking-widest text-gray-400">{b}</span>
-                                      <CheckCircle className="text-primary" size={16} />
+                                      <CircleCheck className="text-primary" size={16} />
                                    </div>
                                 ))}
                              </div>
