@@ -12,6 +12,7 @@ const Checkout = () => {
   const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const [formData, setFormData] = useState({
     name: user?.name || '',
@@ -39,7 +40,7 @@ const Checkout = () => {
       order_id: orderData.id,
       handler: async (response) => {
         try {
-          const verifyUrl = "http://localhost:5000/api/orders/verify";
+          const verifyUrl = `${API_URL}/api/orders/verify`;
           const { data } = await axios.post(verifyUrl, response);
           if (data.msg === "Payment Success") {
             toast.success("Order Placed Successfully!");
@@ -74,7 +75,7 @@ const Checkout = () => {
     if (paymentMethod === 'razorpay') {
       try {
         setLoading(true);
-        const orderUrl = "http://localhost:5000/api/orders";
+        const orderUrl = `${API_URL}/api/orders`;
         const { data } = await axios.post(orderUrl, { amount: totalAmount });
         initPayment(data.data);
       } catch (error) {

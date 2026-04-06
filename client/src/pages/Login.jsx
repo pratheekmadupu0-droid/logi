@@ -17,6 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const actionCodeSettings = {
     url: "http://localhost:5173/verify", 
