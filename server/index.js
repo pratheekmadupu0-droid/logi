@@ -16,10 +16,12 @@ app.use(morgan('dev'));
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const adsRoutes = require('./routes/ads');
 
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/ads', adsRoutes);
 
 // Basic health check
 app.get('/', (req, res) => {

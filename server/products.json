@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Traditional Ragi Malt Powder",
+    "price": 250,
+    "image": "https://i.ibb.co/68vMM4y3/product1.png",
+    "category": "Malt",
+    "description": "Rich in calcium and iron, our Traditional Ragi Malt is slow-roasted for maximum flavor and nutrition.",
+    "benefits": ["Calcium Rich", "High Fiber", "Slow-Roasted"],
+    "nutrients": ["Iron: 4mg", "Calcium: 350mg", "Protein: 7g"]
+  },
+  {
+    "id": 2,
+    "name": "Multi-Millet Health Flour",
+    "price": 350,
+    "image": "https://i.ibb.co/YBxS2Nf8/product1.png",
+    "category": "Flour",
+    "description": "A perfect blend of 7 ancient millets ground on stone mills to preserve vital nutrients.",
+    "benefits": ["Stone Ground", "Gluten-Free", "Low GI"],
+    "nutrients": ["Carbs: 65g", "Protein: 12g", "Fiber: 18g"]
+  },
+  {
+    "id": 3,
+    "name": "Sprouted Ragi Baby Cereal",
+    "price": 180,
+    "image": "https://i.ibb.co/68vMM4y3/product1.png",
+    "category": "Child Nutrition",
+    "description": "Easily digestible and nutrient-dense, our sprouted ragi is the ideal first food for infants.",
+    "benefits": ["Sprouted", "Organic", "No Added Sugar"],
+    "nutrients": ["Vitamin C: 15mg", "Easy-to-digest"]
+  },
+  {
+    "id": 4,
+    "name": "Organic Little Millet Rice",
+    "price": 150,
+    "image": "https://i.ibb.co/YBxS2Nf8/product1.png",
+    "category": "Rice",
+    "description": "Whole grain little millet rice, a healthy alternative to white rice with a lower glycemic index.",
+    "benefits": ["Whole Grain", "Pesticide-Free", "High Energy"],
+    "nutrients": ["Magnesium: 90mg", "B-Vitamins"]
+  }
+]

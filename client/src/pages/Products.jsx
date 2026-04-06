@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Search, ChevronDown, Check, Star, ShoppingCart, Eye, SlidersHorizontal } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { PRODUCTS, CATEGORIES } from '../utils/mockData';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
@@ -14,11 +14,30 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('cat') || 'All');
   const [sortBy, setSortBy] = useState('Popular');
   const [showFilters, setShowFilters] = useState(false);
-  const [products, setProducts] = useState(PRODUCTS);
+  const [allProducts, setAllProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
-    let filtered = PRODUCTS;
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get(`${API_URL}/api/products`);
+        setAllProducts(data);
+        setProducts(data);
+      } catch (err) {
+          toast.error("Failed to load products");
+      } finally {
+          setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    let filtered = allProducts;
     if (selectedCategory !== 'All') {
       filtered = filtered.filter(p => p.category === selectedCategory);
     }
@@ -84,14 +103,14 @@ const Products = () => {
                   <span className="font-medium text-sm">All Products</span>
                   {selectedCategory === 'All' && <Check size={16} />}
                 </button>
-                {CATEGORIES.map(cat => (
+                {['Malt', 'Flour', 'Child Nutrition', 'Rice'].map(cat => (
                   <button 
-                    key={cat.name}
-                    onClick={() => setSelectedCategory(cat.name)} 
-                    className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl transition-all ${selectedCategory === cat.name ? 'bg-primary text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)} 
+                    className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl transition-all ${selectedCategory === cat ? 'bg-primary text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
                   >
-                    <span className="font-medium text-sm">{cat.name}</span>
-                    {selectedCategory === cat.name && <Check size={16} />}
+                    <span className="font-medium text-sm">{cat}</span>
+                    {selectedCategory === cat && <Check size={16} />}
                   </button>
                 ))}
               </div>

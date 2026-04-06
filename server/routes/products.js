@@ -1,24 +1,58 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 
-// Mock Products
-const PRODUCTS = [
-  { id: '1', name: 'Pure Whey Protein Isolate', price: 49.99, category: 'Protein', rating: 4.8, reviews: 124, image: 'https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&q=80&w=800' },
-  { id: '2', name: 'Advanced Daily Multivitamin', price: 29.99, category: 'Vitamins', rating: 4.9, reviews: 89, image: 'https://images.unsplash.com/photo-1584017945391-5fe1f08ca26a?auto=format&fit=crop&q=80&w=800' },
-  { id: '3', name: 'Creatine Monohydrate Elite', price: 34.99, category: 'Supplements', rating: 4.7, reviews: 215, image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&q=80&w=800' },
-  { id: '4', name: 'Organic Plant-Based Protein', price: 54.99, category: 'Protein', rating: 4.6, reviews: 56, image: 'https://images.unsplash.com/photo-1579722820308-d74e5719d23e?auto=format&fit=crop&q=80&w=800' }
-];
+const PRODUCTS_FILE = path.join(__dirname, '../products.json');
 
-// GET: All products
+// Helper to read products
+const readProducts = () => {
+    const data = fs.readFileSync(PRODUCTS_FILE, 'utf-8');
+    return JSON.parse(data);
+};
+
+// Helper to write products
+const writeProducts = (products) => {
+    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(products, null, 2));
+};
+
+// Get All Products (GET /api/products)
 router.get('/', (req, res) => {
-  res.json(PRODUCTS);
+    try {
+        const products = readProducts();
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ message: "Error reading products" });
+    }
 });
 
-// GET: Single product
-router.get('/:id', (req, res) => {
-  const product = PRODUCTS.find(p => p.id === req.params.id);
-  if (!product) return res.status(404).json({ message: 'Product not found' });
-  res.json(product);
+// Update Product (PUT /api/products/:id) - Used by Admin
+router.put('/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedProduct = req.body;
+        let products = readProducts();
+        
+        products = products.map(p => p.id === parseInt(id) ? { ...p, ...updatedProduct } : p);
+        writeProducts(products);
+        
+        res.json({ message: "Product updated successfully", product: updatedProduct });
+    } catch (err) {
+        res.status(500).json({ message: "Error updating product" });
+    }
+});
+
+// Add New Product
+router.post('/', (req, res) => {
+    try {
+        const newProduct = { ...req.body, id: Date.now() };
+        let products = readProducts();
+        products.push(newProduct);
+        writeProducts(products);
+        res.json({ message: "Product added", product: newProduct });
+    } catch (err) {
+        res.status(500).json({ message: "Error adding product" });
+    }
 });
 
 module.exports = router;

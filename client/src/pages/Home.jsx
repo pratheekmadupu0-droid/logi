@@ -2,13 +2,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, CircleCheck, TrendingUp, Star, Leaf, Heart, Coffee } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { PRODUCTS, CATEGORIES } from '../utils/mockData';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { addItem } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [products, setProducts] = React.useState([]);
+  const [ads, setAds] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [prodRes, adsRes] = await Promise.all([
+          axios.get(`${API_URL}/api/products`),
+          axios.get(`${API_URL}/api/ads`)
+        ]);
+        setProducts(prodRes.data);
+        setAds(adsRes.data);
+      } catch (err) {
+        console.error("Home data fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
@@ -88,14 +111,42 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Dynamic Ads Section */}
+      {ads.length > 0 && (
+        <section className="section-padding bg-white">
+          <div className="relative overflow-hidden rounded-[50px] shadow-2xl h-[200px] md:h-[400px]">
+            {ads.map((ad, idx) => (
+              <motion.div 
+                key={ad.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute inset-0"
+                style={{ display: idx === 0 ? 'block' : 'none' }} // Simple logic for first ad
+              >
+                <img src={ad.url} className="w-full h-full object-cover" alt={ad.title} />
+                <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center p-6 text-white">
+                  <h2 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter">{ad.title}</h2>
+                  <Link to="/shop" className="bg-white text-black px-8 py-3 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-primary transition-all">Shop the Offer</Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Featured Categories */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white pt-0">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl font-bold text-gray-900">Nourishment for Every Need</h2>
           <p className="text-gray-500">Pick the perfect companion for your daily wellness journey.</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {CATEGORIES.map((cat, idx) => (
+          {[
+            { name: 'Malt', image: 'https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png' },
+            { name: 'Flour', image: 'https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png' },
+            { name: 'Child', image: 'https://i.ibb.co/68vMM4y3/product1.png' },
+            { name: 'Rice', image: 'https://i.ibb.co/YBxS2Nf8/product1.png' }
+          ].map((cat, idx) => (
             <motion.div 
               key={cat.name}
               initial={{ opacity: 0, y: 20 }}
@@ -133,7 +184,7 @@ const Home = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PRODUCTS.slice(0, 3).map((product, idx) => (
+          {products.slice(0, 3).map((product, idx) => (
             <motion.div 
               key={product.id}
               initial={{ opacity: 0, y: 30 }}
@@ -148,9 +199,6 @@ const Home = () => {
                   alt={product.name} 
                   className="w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-500" 
                 />
-                <button className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-3 rounded-full text-gray-500 hover:text-red-500 transition-colors shadow-sm">
-                  <Star fill="currentColor" size={20} />
-                </button>
               </div>
               <h3 className="font-bold text-xl mb-1 truncate text-gray-900">{product.name}</h3>
               <p className="text-gray-400 text-sm mb-6 uppercase tracking-widest font-black leading-none">{product.category}</p>

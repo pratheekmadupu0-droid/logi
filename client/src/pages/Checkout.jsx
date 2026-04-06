@@ -41,7 +41,12 @@ const Checkout = () => {
       handler: async (response) => {
         try {
           const verifyUrl = `${API_URL}/api/orders/verify`;
-          const { data } = await axios.post(verifyUrl, response);
+          const { data } = await axios.post(verifyUrl, { 
+              ...response,
+              amount: totalAmount,
+              items: items,
+              userInfo: formData
+          });
           if (data.msg === "Payment Success") {
             toast.success("Order Placed Successfully!");
             dispatch(clearCart());
@@ -76,7 +81,12 @@ const Checkout = () => {
       try {
         setLoading(true);
         const orderUrl = `${API_URL}/api/orders`;
-        const { data } = await axios.post(orderUrl, { amount: totalAmount });
+        const { data } = await axios.post(orderUrl, { 
+            amount: totalAmount,
+            items: items,
+            userInfo: formData,
+            paymentMethod: 'razorpay'
+        });
         initPayment(data.data);
       } catch (error) {
         console.error(error);
@@ -87,12 +97,22 @@ const Checkout = () => {
     } else {
       // COD Logic
       setLoading(true);
-      setTimeout(() => {
-        toast.success("Order Placed Successfully (COD)!");
-        dispatch(clearCart());
-        setLoading(false);
-        navigate('/');
-      }, 1500);
+      try {
+          const orderUrl = `${API_URL}/api/orders`;
+          await axios.post(orderUrl, { 
+              amount: totalAmount,
+              items: items,
+              userInfo: formData,
+              paymentMethod: 'cod'
+          });
+          toast.success("Order Placed Successfully (COD)!");
+          dispatch(clearCart());
+          setLoading(false);
+          navigate('/');
+      } catch (err) {
+          toast.error("Failed to place COD order");
+          setLoading(false);
+      }
     }
   };
 
