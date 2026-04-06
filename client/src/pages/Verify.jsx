@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import { motion } from 'framer-motion';
 import { Loader2, ShieldCheck, Mail, ChevronRight } from 'lucide-react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const Verify = () => {
@@ -14,6 +15,7 @@ const Verify = () => {
   const [showEmailInput, setShowEmailInput] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const handleVerify = async () => {
@@ -30,10 +32,22 @@ const Verify = () => {
           const result = await signInWithEmailLink(auth, storedEmail, window.location.href);
           localStorage.removeItem('emailForSignIn');
           
-          dispatch(setUser({
+          const userData = {
             email: result.user.email,
             uid: result.user.uid,
-            name: result.user.email?.split('@')[0]
+            name: result.user.displayName || result.user.email?.split('@')[0],
+            photoURL: result.user.photoURL,
+            loginMethod: 'Email Link'
+          };
+
+          // Register in backend
+          await axios.post(`${API_URL}/api/auth/register`, userData);
+
+          dispatch(setUser({
+            email: userData.email,
+            uid: userData.uid,
+            name: userData.name,
+            photoURL: userData.photoURL
           }));
           
           toast.success('Successfully Signed In!');
@@ -55,7 +69,7 @@ const Verify = () => {
     };
 
     handleVerify();
-  }, [navigate, dispatch]);
+  }, [navigate, dispatch, API_URL]);
 
   const handleManualSignIn = async (e) => {
     e.preventDefault();
@@ -63,11 +77,25 @@ const Verify = () => {
     try {
       const result = await signInWithEmailLink(auth, email, window.location.href);
       localStorage.removeItem('emailForSignIn');
-      dispatch(setUser({
+
+      const userData = {
         email: result.user.email,
         uid: result.user.uid,
-        name: result.user.email?.split('@')[0]
+        name: result.user.displayName || result.user.email?.split('@')[0],
+        photoURL: result.user.photoURL,
+        loginMethod: 'Email Link'
+      };
+
+      // Register in backend
+      await axios.post(`${API_URL}/api/auth/register`, userData);
+
+      dispatch(setUser({
+        email: userData.email,
+        uid: userData.uid,
+        name: userData.name,
+        photoURL: userData.photoURL
       }));
+
       toast.success('Successfully Signed In!');
       if (result.user.email === 'pratheekmadupu2006@gmail.com') {
           navigate('/choose-interface', { replace: true });
@@ -75,7 +103,7 @@ const Verify = () => {
           navigate('/');
       }
     } catch (error) {
-           console.error(error);
+      console.error(error);
       toast.error('Invalid link or email address.');
       setLoading(false);
     }

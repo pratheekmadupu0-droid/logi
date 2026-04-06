@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 import { auth, googleProvider } from '../firebase/config';
 import { signInWithPopup, sendSignInLinkToEmail } from 'firebase/auth';
 
@@ -50,6 +51,16 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      
+      // Register user in backend
+      await axios.post(`${API_URL}/api/auth/register`, {
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          uid: user.uid,
+          loginMethod: 'Google'
+      });
+
       dispatch(setUser({ 
         email: user.email, 
         name: user.displayName, 
@@ -120,7 +131,7 @@ const Login = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-4">Email Address</label>
                 <div className="relative group">
-                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-all duration-300" size={20} />
+                   <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-all duration-300" size={20} />
                   <input 
                     type="email" 
                     placeholder="Enter your email" 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { 
   Users, ShoppingBag, PieChart, Edit3, Trash2, 
   Plus, CheckCircle, Truck, CreditCard, Clock, MapPin, 
-  Phone, User as UserIcon, Image as ImageIcon, Save, X
+  Phone, User as UserIcon, Image as ImageIcon, Save, X, Globe, Mail, Fingerprint
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,7 @@ const Admin = () => {
     const [orders, setOrders] = useState([]);
     const [products, setProducts] = useState([]);
     const [ads, setAds] = useState([]);
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     
     // Edit Product State
@@ -23,14 +24,16 @@ const Admin = () => {
 
     const fetchData = async () => {
         try {
-            const [ordersRes, productsRes, adsRes] = await Promise.all([
+            const [ordersRes, productsRes, adsRes, usersRes] = await Promise.all([
                 axios.get(`${API_URL}/api/orders`),
                 axios.get(`${API_URL}/api/products`),
-                axios.get(`${API_URL}/api/ads`)
+                axios.get(`${API_URL}/api/ads`),
+                axios.get(`${API_URL}/api/auth/users`)
             ]);
             setOrders(ordersRes.data);
             setProducts(productsRes.data);
             setAds(adsRes.data);
+            setUsers(usersRes.data);
         } catch (err) {
             toast.error("Error fetching data from server");
         } finally {
@@ -90,12 +93,12 @@ const Admin = () => {
                         <h1 className="text-4xl font-black text-gray-900 tracking-tighter">Business Console</h1>
                         <p className="text-gray-500 font-medium">Logi Operational Overview & Logistics Management.</p>
                     </div>
-                    <div className="flex bg-white p-1 rounded-3xl shadow-sm border border-gray-100">
-                        {['orders', 'products', 'ads'].map(tab => (
+                    <div className="flex bg-white p-1 rounded-3xl shadow-sm border border-gray-100 overflow-x-auto">
+                        {['orders', 'products', 'users', 'ads'].map(tab => (
                             <button 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-primary text-white shadow-lg' : 'text-gray-400 hover:text-gray-600'}`}
+                                className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab ? 'bg-primary text-white shadow-lg' : 'text-gray-400 hover:text-gray-600'}`}
                             >
                                 {tab}
                             </button>
@@ -174,12 +177,81 @@ const Admin = () => {
                                         ))}
                                     </tbody>
                                 </table>
-                                {orders.length === 0 && (
+                            </div>
+                        </div>
+                    )}
+
+                    {/* USERS TAB */}
+                    {activeTab === 'users' && (
+                        <div className="bg-white rounded-[40px] border border-gray-100 shadow-xl overflow-hidden">
+                            <div className="p-8 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+                                <h3 className="text-xl font-black text-gray-900 flex items-center">
+                                    <Users className="mr-3 text-primary" /> Member Directory
+                                </h3>
+                                <span className="bg-primary/10 text-primary px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                    {users.length} AUTHENTICATED USERS
+                                </span>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead className="bg-[#FCFBFA] border-b border-gray-50">
+                                        <tr>
+                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Profile Identity</th>
+                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Authentication Context</th>
+                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Network ID</th>
+                                            <th className="p-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Session Activity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-50">
+                                        {users.map(user => (
+                                            <tr key={user.uid} className="hover:bg-gray-50/30 transition-colors">
+                                                <td className="p-6">
+                                                    <div className="flex items-center space-x-4">
+                                                        {user.photoURL ? (
+                                                            <img src={user.photoURL} className="w-10 h-10 rounded-full border border-gray-100 shadow-sm" />
+                                                        ) : (
+                                                            <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black">
+                                                                {user.name?.charAt(0) || 'U'}
+                                                            </div>
+                                                        )}
+                                                        <div>
+                                                            <p className="text-sm font-black text-gray-900 leading-tight">{user.name}</p>
+                                                            <div className="flex items-center text-[10px] font-bold text-gray-400">
+                                                                <Mail size={10} className="mr-1" /> {user.email}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="p-6">
+                                                    <div className="inline-flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+                                                        {user.loginMethod === 'Google' ? <Globe size={12} className="text-blue-500" /> : <Mail size={12} className="text-orange-500" />}
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-600">{user.loginMethod}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="p-6">
+                                                    <div className="flex items-center space-x-1.5 opacity-50">
+                                                        <Fingerprint size={12} />
+                                                        <span className="text-[10px] font-bold text-gray-500 bg-gray-50 px-2 py-0.5 rounded uppercase">{user.uid.slice(0, 8)}...</span>
+                                                    </div>
+                                                </td>
+                                                <td className="p-6">
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center text-[10px] font-black text-gray-900 uppercase tracking-tight">
+                                                            <Clock size={10} className="mr-1.5 text-primary" /> Last Login
+                                                        </div>
+                                                        <p className="text-[11px] font-bold text-gray-400">{new Date(user.lastLogin).toLocaleString()}</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                {users.length === 0 && (
                                     <div className="p-20 text-center space-y-4">
                                         <div className="w-16 h-16 bg-gray-50 rounded-full mx-auto flex items-center justify-center text-gray-300">
-                                            <ShoppingBag size={30} />
+                                            <Users size={30} />
                                         </div>
-                                        <p className="text-gray-400 font-black uppercase tracking-widest text-xs">No Recent Logistics Flow.</p>
+                                        <p className="text-gray-400 font-black uppercase tracking-widest text-xs">Awaiting First Community Member.</p>
                                     </div>
                                 )}
                             </div>
