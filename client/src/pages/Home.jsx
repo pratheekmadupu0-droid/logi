@@ -59,7 +59,7 @@ const Home = () => {
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="relative">
-             <img src="https://i.ibb.co/Cs61R3Fd/Gemini-Generated-Image-dwv1v9dwv1v9dwv1.png" className="w-full max-w-lg mx-auto drop-shadow-3xl" alt="Logi Essence" />
+             <img src="/milletea.png" className="w-full max-w-lg mx-auto drop-shadow-3xl" alt="Logi Essence" />
           </motion.div>
         </div>
       </section>
