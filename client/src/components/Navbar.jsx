@@ -56,11 +56,10 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link to="/" className="flex items-center group">
             <img 
-              src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" 
-              alt="LOGI NUTRITIONAL PRODUCT" 
-              className="h-10 md:h-12 w-auto object-contain group-hover:scale-110 transition-transform duration-700" 
+              src="/logo.1.png" 
+              alt="LOGI NUTRITIONAL" 
+              className="h-16 md:h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-700" 
             />
-            <span className="ml-4 font-black text-xs md:text-xl tracking-tighter text-primary uppercase leading-none">LOGI <br /> NUTRITIONAL</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-10">

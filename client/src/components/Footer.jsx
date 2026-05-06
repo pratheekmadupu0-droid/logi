@@ -12,8 +12,7 @@ const Footer = () => {
         <div className="space-y-10">
           <Link to="/" className="flex flex-col group">
              <div className="flex items-center space-x-3 mb-2">
-                <img src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" className="h-10 w-auto object-contain shrink-0 invert brightness-0" alt="Logi" />
-                <span className="text-2xl font-black tracking-tighter uppercase italic">Logi.</span>
+                <img src="/logo.1.png" className="h-12 md:h-16 w-auto object-contain shrink-0" alt="Logi" />
              </div>
              <p className="text-white/60 text-xs font-black uppercase tracking-[0.2em] leading-relaxed">
                 Bridging Ancient Purity <br /> With Modern Logistics.
