@@ -126,7 +126,7 @@ const Contact = () => {
                 <div className="p-10 bg-white border border-gray-100 rounded-[60px] space-y-4 shadow-sm hover:translate-x-4 transition-transform duration-700">
                    <MapPin className="text-primary" size={32} />
                    <h3 className="text-2xl font-black uppercase text-gray-900">Headquarters</h3>
-                   <p className="text-gray-500 font-medium leading-relaxed uppercase text-xs tracking-widest">Innovation Hub Node 4<br />Whitefield, Bengaluru<br />India - 560066</p>
+                   <p className="text-gray-500 font-medium leading-relaxed uppercase text-xs tracking-widest">Gurramguda, BN Reddy<br />RR Dist Hyderabad<br />Telangana, 501510</p>
                 </div>
              </div>
 
@@ -138,6 +138,19 @@ const Contact = () => {
                 <span className="text-[10px] font-black uppercase text-gray-400 tracking-[0.3em]">Follow The Science</span>
              </div>
           </div>
+        </div>
+
+        {/* Perfect Map Section */}
+        <div className="mt-24 w-full h-[450px] rounded-[60px] overflow-hidden shadow-3xl border border-gray-100">
+          <iframe 
+            src="https://maps.google.com/maps?q=Gurramguda,%20BN%20Reddy,%20RR%20Dist%20Hyderabad,%20Telangana,%20501510&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
       

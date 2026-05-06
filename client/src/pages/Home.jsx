@@ -40,14 +40,44 @@ const Home = () => {
     toast.success(`${product.name} added to cart!`);
   };
 
-  const handleChatSubmit = (e) => {
+  const handleChatSubmit = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
-    setChatMessages([...chatMessages, { sender: 'user', text: chatInput }]);
+
+    const userMsg = chatInput;
+    setChatMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
     setChatInput('');
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, { sender: 'bot', text: 'Thank you for your message! Our team will get back to you shortly. For immediate assistance, please use our Contact page or WhatsApp.' }]);
-    }, 1000);
+
+    // Add a temporary typing indicator
+    setChatMessages(prev => [...prev, { sender: 'bot', text: 'Typing...' }]);
+
+    try {
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'google/gemini-2.5-flash',
+          messages: [
+            { role: 'system', content: 'You are a helpful customer support chatbot for Logi Nutritional Company. Our products include Malt Powders, Natural Flours, Diabetic Rice, and Health Teas. Our office is located at Gurramguda, BN Reddy, RR Dist Hyderabad, Telangana, 501510. Keep answers short, helpful, and polite.' },
+            ...chatMessages.filter(m => m.sender === 'user').map(m => ({
+              role: 'user',
+              content: m.text
+            })),
+            { role: 'user', content: userMsg }
+          ]
+        })
+      });
+      
+      const data = await response.json();
+      const botReply = data.choices?.[0]?.message?.content || "Sorry, I am having trouble connecting right now.";
+      
+      setChatMessages(prev => prev.filter(m => m.text !== 'Typing...').concat({ sender: 'bot', text: botReply }));
+    } catch (err) {
+      setChatMessages(prev => prev.filter(m => m.text !== 'Typing...').concat({ sender: 'bot', text: "Network error. Please try again." }));
+    }
   };
 
   return (
