@@ -221,9 +221,12 @@ const Home = () => {
       {/* Chat Bot Widget */}
       <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
         {isChatOpen && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white w-80 h-96 rounded-2xl shadow-2xl mb-4 flex flex-col overflow-hidden border border-gray-100">
-            <div className="bg-primary text-white p-4 font-black uppercase tracking-widest text-xs flex justify-between items-center">
-              <span>Logi Support Node</span>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white w-[90vw] md:w-[450px] h-[60vh] md:h-[600px] rounded-[30px] shadow-3xl mb-4 flex flex-col overflow-hidden border border-gray-100">
+            <div className="bg-primary text-white p-5 font-black uppercase tracking-widest text-xs flex justify-between items-center border-b border-white/10">
+              <div className="flex items-center space-x-3">
+                 <img src="https://i.ibb.co/Mkhpj225/favicon-largefill-1.png" className="h-6 invert brightness-0" alt="Logi" />
+                 <span className="text-lg italic tracking-tighter">Logi.</span>
+              </div>
               <button onClick={() => setIsChatOpen(false)} className="text-white hover:text-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
