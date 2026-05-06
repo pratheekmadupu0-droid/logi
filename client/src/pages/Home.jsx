@@ -15,6 +15,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const [products, setProducts] = React.useState(PRODUCTS);
   const [loading, setLoading] = React.useState(true);
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const [chatMessages, setChatMessages] = React.useState([{ sender: 'bot', text: 'Hello! How can I help you today?' }]);
+  const [chatInput, setChatInput] = React.useState('');
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -35,6 +38,16 @@ const Home = () => {
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
     toast.success(`${product.name} added to cart!`);
+  };
+
+  const handleChatSubmit = (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    setChatMessages([...chatMessages, { sender: 'user', text: chatInput }]);
+    setChatInput('');
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, { sender: 'bot', text: 'Thank you for your message! Our team will get back to you shortly. For immediate assistance, please use our Contact page or WhatsApp.' }]);
+    }, 1000);
   };
 
   return (
@@ -187,6 +200,51 @@ const Home = () => {
            </div>
         </div>
       </section>
+
+      {/* Chat Bot Widget */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+        {isChatOpen && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white w-80 h-96 rounded-2xl shadow-2xl mb-4 flex flex-col overflow-hidden border border-gray-100">
+            <div className="bg-primary text-white p-4 font-black uppercase tracking-widest text-xs flex justify-between items-center">
+              <span>Logi Support Node</span>
+              <button onClick={() => setIsChatOpen(false)} className="text-white hover:text-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50">
+              {chatMessages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.sender === 'user' ? 'bg-primary text-white rounded-tr-none' : 'bg-white border border-gray-100 text-gray-700 rounded-tl-none'}`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <form onSubmit={handleChatSubmit} className="p-3 border-t border-gray-100 bg-white flex">
+              <input 
+                type="text" 
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder="Type your message..." 
+                className="flex-1 outline-none text-sm px-2"
+              />
+              <button type="submit" className="text-primary p-2 hover:bg-gray-50 rounded-full transition-colors">
+                <Send size={18} />
+              </button>
+            </form>
+          </motion.div>
+        )}
+        <button 
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className="w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300"
+        >
+          {isChatOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

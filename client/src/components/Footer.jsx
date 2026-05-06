@@ -30,8 +30,9 @@ const Footer = () => {
         <div>
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-10">Intelligence</h4>
           <ul className="space-y-4">
-            <li><Link to="/shop" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Product Gallery</Link></li>
-            <li><a href="/#about" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Our Origins</a></li>
+            <li><Link to="/shop" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Products</Link></li>
+            <li><a href="/#about" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> About Us</a></li>
+            <li><Link to="/franchise" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Franchise</Link></li>
             <li><Link to="/contact" className="text-sm font-black uppercase tracking-widest hover:text-secondary-light transition-all flex items-center group"><ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-100 transition-all" /> Connect Node</Link></li>
           </ul>
         </div>

@@ -16,7 +16,10 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.success("Logistics message dispatched! We'll reach out soon.");
+    const text = `*New Contact Request*\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}`;
+    const whatsappURL = `https://wa.me/919985309102?text=${encodeURIComponent(text)}`;
+    window.open(whatsappURL, '_blank');
+    toast.success("Logistics message dispatched via WhatsApp!");
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -42,15 +45,15 @@ const Contact = () => {
           </motion.div>
 
           <div className="flex flex-col space-y-12">
-            <div className="flex items-center space-x-6 group">
-               <div className="w-20 h-20 bg-white border border-gray-100 rounded-[30px] flex items-center justify-center shadow-xl group-hover:bg-primary group-hover:text-white transition-all duration-700">
-                  <Phone size={28} />
+             <a href="https://wa.me/919985309102" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-6 group">
+               <div className="w-20 h-20 bg-white border border-gray-100 rounded-[30px] flex items-center justify-center shadow-xl group-hover:bg-[#25D366] group-hover:text-white transition-all duration-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                </div>
                <div>
-                  <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-1">Direct Line</p>
-                  <p className="text-2xl font-black text-gray-900">+91 98765 43210</p>
+                  <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-1">WhatsApp Direct</p>
+                  <p className="text-2xl font-black text-gray-900">+91 99853 09102</p>
                </div>
-            </div>
+             </a>
             <div className="flex items-center space-x-6 group">
                <div className="w-20 h-20 bg-white border border-gray-100 rounded-[30px] flex items-center justify-center shadow-xl group-hover:bg-primary group-hover:text-white transition-all duration-700">
                   <Mail size={28} />
@@ -151,6 +154,11 @@ const Contact = () => {
             ))}
          </div>
       </section>
+
+      {/* Floating WhatsApp Icon */}
+      <a href="https://wa.me/919985309102" target="_blank" rel="noopener noreferrer" className="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-3xl hover:scale-110 transition-transform duration-300 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+      </a>
     </div>
   );
 };
