@@ -59,14 +59,16 @@ const Home = () => {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${key}`,
+          'HTTP-Referer': window.location.href,
+          'X-Title': 'Logi Nutritional',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'google/gemini-2.5-flash',
+          model: 'google/gemini-1.5-flash',
           messages: [
             { role: 'system', content: 'You are a helpful customer support chatbot for Logi Nutritional Company. Our products include Malt Powders, Natural Flours, Diabetic Rice, and Health Teas. Our office is located at Gurramguda, BN Reddy, RR Dist Hyderabad, Telangana, 501510. Keep answers short, helpful, and polite.' },
-            ...chatMessages.filter(m => m.sender === 'user').map(m => ({
-              role: 'user',
+            ...chatMessages.filter(m => m.text !== 'Typing...' && m.text !== 'Hello! How can I help you today?').map(m => ({
+              role: m.sender === 'user' ? 'user' : 'assistant',
               content: m.text
             })),
             { role: 'user', content: userMsg }
@@ -75,11 +77,18 @@ const Home = () => {
       });
       
       const data = await response.json();
-      const botReply = data.choices?.[0]?.message?.content || "Sorry, I am having trouble connecting right now.";
+      
+      if (data.error) {
+        console.error("OpenRouter Error:", data.error);
+        throw new Error(data.error.message || "API Error");
+      }
+      
+      const botReply = data.choices?.[0]?.message?.content || "Sorry, I received an empty response.";
       
       setChatMessages(prev => prev.filter(m => m.text !== 'Typing...').concat({ sender: 'bot', text: botReply }));
     } catch (err) {
-      setChatMessages(prev => prev.filter(m => m.text !== 'Typing...').concat({ sender: 'bot', text: "Network error. Please try again." }));
+      console.error("Chat API Error:", err);
+      setChatMessages(prev => prev.filter(m => m.text !== 'Typing...').concat({ sender: 'bot', text: `Connection error: ${err.message}` }));
     }
   };
 
