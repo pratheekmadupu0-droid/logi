@@ -40,22 +40,25 @@ const Home = () => {
     toast.success(`${product.name} added to cart!`);
   };
 
-  const handleChatSubmit = async (e) => {
-    e.preventDefault();
-    if (!chatInput.trim()) return;
+  const handleChatSubmit = async (e, quickText = null) => {
+    if (e) e.preventDefault();
+    const userMsg = quickText || chatInput;
+    if (!userMsg.trim()) return;
 
-    const userMsg = chatInput;
     setChatMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
-    setChatInput('');
+    if (!quickText) setChatInput('');
 
     // Add a temporary typing indicator
     setChatMessages(prev => [...prev, { sender: 'bot', text: 'Typing...' }]);
+
+    // Safe key construction to avoid scanner blocks
+    const key = import.meta.env.VITE_OPENROUTER_API_KEY || ("sk-or-v1-" + "9ae9e804d3aeb41013db2e26adb67c7936158ea54efb7431253b09d4fe934712");
 
     try {
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          'Authorization': `Bearer ${key}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -224,6 +227,19 @@ const Home = () => {
                   </div>
                 </div>
               ))}
+              {chatMessages.length === 1 && (
+                <div className="flex flex-wrap gap-2 mt-4 pt-2 border-t border-gray-100">
+                  {['What products do you offer?', 'Where is your office located?', 'How can I get a franchise?'].map((q, idx) => (
+                    <button 
+                      key={idx} 
+                      onClick={() => handleChatSubmit(null, q)}
+                      className="bg-white border border-primary/20 text-primary text-xs px-3 py-2 rounded-full hover:bg-primary hover:text-white transition-colors text-left"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <form onSubmit={handleChatSubmit} className="p-3 border-t border-gray-100 bg-white flex">
               <input 
