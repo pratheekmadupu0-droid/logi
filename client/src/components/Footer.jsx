@@ -54,7 +54,7 @@ const Footer = () => {
            <div className="space-y-4 bg-white/5 p-8 rounded-[40px] border border-white/10">
               <div className="flex items-center space-x-4">
                  <Globe size={18} className="text-secondary" />
-                 <span className="text-[10px] font-black uppercase tracking-widest">BENGALURU, INDIA</span>
+                 <span className="text-[10px] font-black uppercase tracking-widest">HYDERABAD, INDIA</span>
               </div>
               <p className="text-[9px] font-medium text-white/50 leading-relaxed uppercase tracking-wider">Serving 10,000+ conscious households with sprouted purity.</p>
            </div>
