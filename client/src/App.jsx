@@ -14,6 +14,7 @@ import Admin from './pages/Admin';
 import AdminLanding from './pages/AdminLanding';
 import Contact from './pages/Contact';
 import Franchise from './pages/Franchise';
+import About from './pages/About';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Products />} />
+          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/franchise" element={<Franchise />} />
           <Route path="/admin" element={<Admin />} />

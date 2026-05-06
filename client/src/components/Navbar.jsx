@@ -32,7 +32,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Products', path: '/shop' },
-    { name: 'About Us', path: '/#about' },
+    { name: 'About Us', path: '/about' },
     { name: 'Franchise', path: '/franchise' },
     { name: 'Connect', path: '/contact' },
     ...(user?.email === 'pratheekmadupu2006@gmail.com' ? [{ name: 'Admin', path: '/admin' }] : []),

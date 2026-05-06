@@ -98,7 +98,7 @@ const Franchise = () => {
             <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
               <p className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-4">Growth Intelligence</p>
               <h1 className="text-5xl md:text-8xl font-black text-gray-900 leading-[0.9] tracking-tighter uppercase mb-6">
-                Join the <br /><span className="text-secondary italic">Logi</span> Family.
+                Join the <br /><span className="text-secondary italic">Logi</span> Logistics.
               </h1>
               <p className="text-gray-500 text-lg font-medium max-w-2xl mx-auto leading-relaxed mb-8">
                 Grow Through LOGI Nutritional Company. Low Investment, High Returns. With minimal investment, you can earn substantial profits.

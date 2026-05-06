@@ -96,7 +96,7 @@ const Home = () => {
             <p className="text-gray-500 text-lg max-w-sm font-medium leading-relaxed">Systematically engineered sprouted grains and millets for peak human vitality. Bridging ancient purity with modern logistics.</p>
             <div className="flex items-center space-x-8">
               <Link to="/shop" className="bg-primary text-white px-12 py-6 rounded-[40px] font-black uppercase text-xs tracking-widest hover:bg-accent transition-all shadow-3xl hover:translate-y-[-5px]">Initialize Shop</Link>
-              <a href="#about" className="text-primary font-black uppercase text-xs tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all">Protocol Origins</a>
+              <Link to="/about" className="text-primary font-black uppercase text-xs tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all">Protocol Origins</Link>
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative group">
@@ -164,32 +164,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-40 bg-[#523621] text-white rounded-[100px] mt-20">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-24 items-center">
-           <div className="space-y-12">
-              <div className="space-y-6">
-                <p className="text-secondary font-black uppercase tracking-[0.5em] text-[10px]">Node Origins</p>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">Pure <br /><span className="text-secondary italic">Logistics</span> <br /> Of Logi.</h2>
-              </div>
-              <p className="text-white/60 text-xl leading-relaxed max-w-lg font-medium">To restore ancient grain purity to the modern dinner table. Through traditional sprouting techniques and solar-assisted low-temperature grounding, we preserve the vital life force.</p>
-              <div className="grid grid-cols-2 gap-12 pt-8">
-                 <div className="bg-white/5 border border-white/10 p-8 rounded-[40px]">
-                    <p className="text-4xl font-black text-white italic mb-2">100%</p>
-                    <p className="text-[10px] uppercase font-black tracking-widest text-secondary">Traditional Protocol</p>
-                 </div>
-                 <div className="bg-white/5 border border-white/10 p-8 rounded-[40px]">
-                    <p className="text-4xl font-black text-secondary italic mb-2">Low-GI</p>
-                    <p className="text-[10px] uppercase font-black tracking-widest text-white/40">Lab Certified Node</p>
-                 </div>
-              </div>
-           </div>
-           <div className="relative group">
-              <div className="absolute inset-0 bg-secondary rounded-[80px] rotate-6 group-hover:rotate-2 transition-transform duration-700 -z-10" />
-              <img src="https://i.ibb.co/kV0BPpv6/Gemini-Generated-Image-er69hzer69hzer69.png" className="w-full rounded-[80px] shadow-3xl grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Natural Grains" />
-           </div>
-        </div>
-      </section>
+
 
       {/* Testimonials & Connect Section */}
       <section className="py-40 bg-white">
