@@ -64,7 +64,7 @@ const Home = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'google/gemini-1.5-flash',
+          model: 'openai/gpt-3.5-turbo',
           messages: [
             { role: 'system', content: 'You are a helpful customer support chatbot for Logi Nutritional Company. Our products include Malt Powders, Natural Flours, Diabetic Rice, and Health Teas. Our office is located at Gurramguda, BN Reddy, RR Dist Hyderabad, Telangana, 501510. Keep answers short, helpful, and polite.' },
             ...chatMessages.filter(m => m.text !== 'Typing...' && m.text !== 'Hello! How can I help you today?').map(m => ({
