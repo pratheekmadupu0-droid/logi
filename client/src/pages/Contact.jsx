@@ -123,6 +123,14 @@ const Contact = () => {
                    <p className="text-gray-400 font-medium leading-relaxed uppercase text-xs tracking-widest">Mon - Sat: 08:00 - 20:00 IST<br />Response in &lt; 24h</p>
                 </div>
 
+                <div className="p-10 bg-white border border-gray-100 rounded-[60px] flex flex-col items-center justify-center space-y-6 shadow-sm hover:translate-x-4 transition-transform duration-700 text-center">
+                   <img src="/sicon-logo.png" alt="Sicon Logo" className="h-24 w-auto object-contain" />
+                   <div>
+                      <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2">Producted & Marketed By</p>
+                      <h3 className="text-2xl font-black uppercase text-gray-900">Sicon Enterprises</h3>
+                   </div>
+                </div>
+
                 <div className="p-10 bg-white border border-gray-100 rounded-[60px] space-y-4 shadow-sm hover:translate-x-4 transition-transform duration-700">
                    <MapPin className="text-primary" size={32} />
                    <h3 className="text-2xl font-black uppercase text-gray-900">Headquarters</h3>
