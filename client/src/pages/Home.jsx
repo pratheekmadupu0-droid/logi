@@ -94,8 +94,20 @@ const Home = () => {
 
   return (
     <div className="overflow-hidden bg-[#FDFBF7]">
+      {/* Full screen Video Intro Section */}
+      <section className="relative w-full h-screen bg-[#3A2617] overflow-hidden">
+        <video 
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/logi_anime.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      </section>
+
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-32">
+      <section id="hero-section" className="relative min-h-[90vh] flex items-center pt-32">
         <div className="absolute top-0 right-0 w-2/3 h-full bg-[#EADDCA]/10 rounded-bl-[300px] -z-10" />
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="space-y-10">
