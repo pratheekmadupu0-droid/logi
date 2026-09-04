@@ -60,6 +60,25 @@ const Footer = () => {
         </div>
       </div>
 
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 flex justify-center">
+        <a 
+          href="https://www.sicon.space/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="inline-flex items-center space-x-4 md:space-x-6 bg-[#090D16] hover:bg-[#111827] border border-white/15 hover:border-white/30 px-8 py-3.5 rounded-full transition-all duration-500 shadow-2xl group cursor-pointer hover:scale-[1.02]"
+        >
+          <span className="text-white text-xs md:text-sm font-black uppercase tracking-widest group-hover:text-white/90">
+            POWERED BY SICON ENTERPRISES
+          </span>
+          <span className="h-6 w-[1px] bg-white/20 shrink-0" />
+          <img 
+            src="/sicon-logo.png" 
+            alt="SICON ENTERPRISES" 
+            className="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" 
+          />
+        </a>
+      </div>
+
       <div className="border-t border-white/10 pt-12 max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between">
         <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">© 2026 LOGI NUTRITIONAL LOGISTICS HUB. ALL PROTOCOLS RESERVED.</p>
         <div className="flex space-x-10 mt-6 md:mt-0 text-[9px] font-black uppercase tracking-[0.3em] text-white/30">

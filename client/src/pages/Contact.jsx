@@ -123,13 +123,14 @@ const Contact = () => {
                    <p className="text-gray-400 font-medium leading-relaxed uppercase text-xs tracking-widest">Mon - Sat: 08:00 - 20:00 IST<br />Response in &lt; 24h</p>
                 </div>
 
-                <div className="p-10 bg-white border border-gray-100 rounded-[60px] flex flex-col items-center justify-center space-y-6 shadow-sm hover:translate-x-4 transition-transform duration-700 text-center">
-                   <img src="/sicon-logo.png" alt="Sicon Logo" className="h-24 w-auto object-contain" />
+                <a href="https://www.sicon.space/" target="_blank" rel="noopener noreferrer" className="p-10 bg-white border border-gray-100 rounded-[60px] flex flex-col items-center justify-center space-y-6 shadow-sm hover:translate-x-4 transition-all duration-700 text-center block cursor-pointer group hover:shadow-xl">
+                   <img src="/sicon-logo.png" alt="Sicon Logo" className="h-24 w-auto object-contain transition-transform group-hover:scale-105" />
                    <div>
-                      <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2">Producted & Marketed By</p>
-                      <h3 className="text-2xl font-black uppercase text-gray-900">Sicon Enterprises</h3>
+                      <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest mb-2">Produced & Marketed By</p>
+                      <h3 className="text-2xl font-black uppercase text-gray-900 group-hover:text-primary transition-colors">Sicon Enterprises</h3>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-primary mt-2">www.sicon.space ↗</p>
                    </div>
-                </div>
+                </a>
 
                 <div className="p-10 bg-white border border-gray-100 rounded-[60px] space-y-4 shadow-sm hover:translate-x-4 transition-transform duration-700">
                    <MapPin className="text-primary" size={32} />
