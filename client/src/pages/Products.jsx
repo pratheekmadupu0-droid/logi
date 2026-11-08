@@ -111,15 +111,9 @@ const Products = () => {
             </div>
 
             {/* Mascot Fuel Recommendation Badge */}
-            <div className="bg-gradient-to-br from-gray-950 via-[#1c120a] to-gray-950 text-white p-5 rounded-[32px] border border-amber-900/40 shadow-xl space-y-3">
+            <div className="bg-gradient-to-br from-gray-950 via-[#1c120a] to-gray-950 p-4 rounded-[32px] border border-amber-900/40 shadow-xl">
               <div className="w-full aspect-[444/394] rounded-2xl bg-black overflow-hidden flex items-center justify-center border border-white/10 shadow-inner">
                 <video src="/logi_mascot.mp4" autoPlay loop muted playsInline className="w-full h-full object-contain" />
-              </div>
-              <div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-secondary flex items-center gap-1">
-                  ⚡ Logi's Fuel Choice
-                </p>
-                <p className="text-xs font-bold text-white/90 leading-snug mt-1">100% Sprouted Grains for Daily Vitality</p>
               </div>
             </div>
           </aside>

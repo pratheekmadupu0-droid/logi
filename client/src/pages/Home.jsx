@@ -184,9 +184,9 @@ const Home = () => {
               {/* Glow halo behind rhino */}
               <div className="absolute inset-0 max-w-[420px] max-h-[420px] m-auto bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-transparent rounded-full blur-3xl -z-10" />
               
-              <div className="relative p-6 md:p-10 rounded-[50px] bg-black/50 backdrop-blur-xl border border-white/10 shadow-3xl flex flex-col items-center w-full max-w-md">
+              <div className="relative p-4 md:p-6 rounded-[50px] bg-black/50 backdrop-blur-xl border border-white/10 shadow-3xl flex items-center justify-center w-full max-w-md">
                 {/* Animated Mascot Video */}
-                <div className="relative w-64 md:w-80 aspect-[444/394] overflow-hidden rounded-[36px] bg-black shadow-inner flex items-center justify-center">
+                <div className="relative w-full aspect-[444/394] overflow-hidden rounded-[36px] bg-black shadow-inner flex items-center justify-center">
                   <video 
                     src="/logi_mascot.mp4" 
                     autoPlay 
@@ -195,24 +195,6 @@ const Home = () => {
                     playsInline 
                     className="w-full h-full object-contain"
                   />
-                  {/* Live status badge */}
-                  <div className="absolute top-4 left-4 bg-red-600/90 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full flex items-center space-x-1.5 shadow-lg">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                    <span>LOGI IN ACTION</span>
-                  </div>
-                  {/* Rep Counter / Vitality Tag */}
-                  <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md border border-white/20 text-secondary text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center space-x-1.5">
-                    <Flame size={12} className="text-secondary" />
-                    <span>Powered by Millets</span>
-                  </div>
-                </div>
-                
-                <div className="mt-6 text-center">
-                  <h4 className="text-2xl font-black uppercase tracking-tight text-white flex items-center justify-center gap-2">
-                    Meet Logi
-                    <span className="text-secondary text-sm font-bold lowercase tracking-normal">(@logi)</span>
-                  </h4>
-                  <p className="text-white/60 text-xs font-medium tracking-wide mt-1">Our Sprouted Nutrition Mascot & Fitness Ambassador</p>
                 </div>
               </div>
             </div>

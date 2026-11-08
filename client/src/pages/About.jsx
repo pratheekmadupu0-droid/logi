@@ -45,7 +45,7 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
             {/* Mascot Visual Card */}
             <div className="flex justify-center">
-              <div className="relative p-6 md:p-10 rounded-[50px] bg-black/60 backdrop-blur-2xl border border-white/10 shadow-3xl flex flex-col items-center max-w-sm w-full">
+              <div className="relative p-4 md:p-6 rounded-[50px] bg-black/60 backdrop-blur-2xl border border-white/10 shadow-3xl flex items-center justify-center max-w-sm w-full">
                 <div className="relative w-full aspect-[444/394] rounded-[36px] bg-black overflow-hidden flex items-center justify-center border border-amber-500/20 shadow-inner">
                   <video 
                     src="/logi_mascot.mp4" 
@@ -55,14 +55,6 @@ const About = () => {
                     playsInline 
                     className="w-full h-full object-contain" 
                   />
-                  <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md border border-white/20 text-secondary text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1">
-                    <Flame size={10} className="text-secondary" />
-                    <span>Active Mascot</span>
-                  </div>
-                </div>
-                <div className="mt-5 text-center">
-                  <h4 className="text-xl font-black uppercase tracking-tight text-white">Logi The Rhino</h4>
-                  <p className="text-secondary text-xs font-bold mt-0.5 tracking-wide">Symbol of Herbivore Strength</p>
                 </div>
               </div>
             </div>
