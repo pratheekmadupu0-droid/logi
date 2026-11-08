@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, ShieldCheck, CircleCheck, TrendingUp, Star, 
-  Leaf, Heart, Coffee, Phone, Mail, MapPin, Send
+  Leaf, Heart, Coffee, Phone, Mail, MapPin, Send,
+  Zap, Activity, Flame, Dumbbell, Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -124,6 +125,27 @@ const Home = () => {
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative group">
+             {/* Floating Mascot Vitality Badge */}
+             <div className="absolute -top-8 -left-6 bg-gray-950/95 backdrop-blur-xl text-white p-3 pr-5 rounded-[32px] shadow-2xl border border-white/10 hidden md:flex items-center space-x-3.5 z-20 hover:scale-105 transition-all duration-300">
+               <div className="w-12 h-12 rounded-2xl bg-black overflow-hidden flex items-center justify-center shrink-0 border border-amber-500/40 shadow-inner">
+                 <video 
+                   src="/logi_mascot.mp4" 
+                   autoPlay 
+                   loop 
+                   muted 
+                   playsInline 
+                   className="w-full h-full object-contain"
+                 />
+               </div>
+               <div>
+                 <div className="flex items-center space-x-1.5">
+                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                   <p className="text-[9px] font-black uppercase tracking-widest text-secondary">Vitality Reps</p>
+                 </div>
+                 <p className="text-xs font-black text-white uppercase tracking-tight">Active Mascot</p>
+               </div>
+             </div>
+
              <img src="/milletea.png" className="w-full max-w-xl mx-auto drop-shadow-[0_35px_35px_rgba(82,54,33,0.2)] group-hover:scale-105 transition-transform duration-[2s]" alt="Logi Essence" />
              <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[40px] shadow-2xl border border-gray-50 hidden md:block animate-bounce">
                 <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Purity Level</p>
@@ -146,6 +168,117 @@ const Home = () => {
                 <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-[0.02] transition-opacity" />
              </Link>
           ))}
+        </div>
+      </section>
+
+      {/* Mascot Peak Vitality Showcase */}
+      <section className="py-20 max-w-7xl mx-auto px-4 md:px-8">
+        <div className="relative overflow-hidden rounded-[70px] bg-gradient-to-br from-[#0c0805] via-[#1c120a] to-[#080503] text-white p-8 md:p-20 shadow-3xl border border-amber-900/30">
+          {/* Ambient Glows */}
+          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-amber-600/15 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 right-10 w-80 h-80 bg-orange-600/10 rounded-full blur-[100px] pointer-events-none" />
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            {/* Mascot Animated Visual Card */}
+            <div className="relative flex justify-center items-center">
+              {/* Glow halo behind rhino */}
+              <div className="absolute inset-0 max-w-[420px] max-h-[420px] m-auto bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-transparent rounded-full blur-3xl -z-10" />
+              
+              <div className="relative p-6 md:p-10 rounded-[50px] bg-black/50 backdrop-blur-xl border border-white/10 shadow-3xl flex flex-col items-center w-full max-w-md">
+                {/* Animated Mascot Video */}
+                <div className="relative w-64 md:w-80 aspect-[444/394] overflow-hidden rounded-[36px] bg-black shadow-inner flex items-center justify-center">
+                  <video 
+                    src="/logi_mascot.mp4" 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    className="w-full h-full object-contain"
+                  />
+                  {/* Live status badge */}
+                  <div className="absolute top-4 left-4 bg-red-600/90 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full flex items-center space-x-1.5 shadow-lg">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                    <span>LOGI IN ACTION</span>
+                  </div>
+                  {/* Rep Counter / Vitality Tag */}
+                  <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md border border-white/20 text-secondary text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center space-x-1.5">
+                    <Flame size={12} className="text-secondary" />
+                    <span>Powered by Millets</span>
+                  </div>
+                </div>
+                
+                <div className="mt-6 text-center">
+                  <h4 className="text-2xl font-black uppercase tracking-tight text-white flex items-center justify-center gap-2">
+                    Meet Logi
+                    <span className="text-secondary text-sm font-bold lowercase tracking-normal">(@logi)</span>
+                  </h4>
+                  <p className="text-white/60 text-xs font-medium tracking-wide mt-1">Our Sprouted Nutrition Mascot & Fitness Ambassador</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mascot Info & Value Proposition */}
+            <div className="space-y-8">
+              <div>
+                <div className="inline-flex items-center space-x-2 bg-secondary/15 border border-secondary/30 px-4 py-1.5 rounded-full text-secondary text-[10px] font-black uppercase tracking-[0.3em] mb-4">
+                  <Flame size={14} className="text-secondary" />
+                  <span>Pure Energy Protocol</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white">
+                  Fueled By Millets. <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-amber-400 to-orange-400">
+                    Built For Strength.
+                  </span>
+                </h2>
+                <p className="text-white/70 text-base md:text-lg font-medium leading-relaxed mt-5">
+                  Logi represents untamed resilience and natural stamina. Just like him, our products are crafted without shortcuts — systematically sprouted for bio-available nutrition that powers your daily workouts and long-term health.
+                </p>
+              </div>
+
+              {/* Feature Pills / Vitality Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-5 rounded-[28px] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="flex items-center space-x-3 text-secondary mb-2">
+                    <Zap size={20} />
+                    <span className="text-xs font-black uppercase tracking-widest text-white">100% Sprouted</span>
+                  </div>
+                  <p className="text-white/50 text-xs font-medium">Enhanced nutrient absorption & effortless digestion.</p>
+                </div>
+                <div className="p-5 rounded-[28px] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="flex items-center space-x-3 text-secondary mb-2">
+                    <Activity size={20} />
+                    <span className="text-xs font-black uppercase tracking-widest text-white">Low Glycemic</span>
+                  </div>
+                  <p className="text-white/50 text-xs font-medium">Sustained metabolic stamina with zero insulin spikes.</p>
+                </div>
+                <div className="p-5 rounded-[28px] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="flex items-center space-x-3 text-secondary mb-2">
+                    <Dumbbell size={20} />
+                    <span className="text-xs font-black uppercase tracking-widest text-white">Muscle Fuel</span>
+                  </div>
+                  <p className="text-white/50 text-xs font-medium">Plant-based protein, iron, calcium & vital micronutrients.</p>
+                </div>
+                <div className="p-5 rounded-[28px] bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="flex items-center space-x-3 text-secondary mb-2">
+                    <Leaf size={20} />
+                    <span className="text-xs font-black uppercase tracking-widest text-white">Zero Fillers</span>
+                  </div>
+                  <p className="text-white/50 text-xs font-medium">100% pure grains straight from trusted regional farms.</p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap items-center gap-5 pt-2">
+                <Link to="/shop" className="bg-secondary text-gray-950 font-black uppercase text-xs tracking-widest px-8 py-4 rounded-full hover:bg-white transition-all shadow-xl hover:scale-105 flex items-center space-x-2">
+                  <span>Power Your Routine</span>
+                  <ArrowRight size={16} />
+                </Link>
+                <Link to="/about" className="text-white/80 hover:text-white font-black uppercase text-xs tracking-widest border-b border-white/30 pb-1 hover:border-white transition-colors">
+                  Discover Our Story
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -236,7 +369,20 @@ const Home = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white w-[90vw] md:w-[450px] h-[60vh] md:h-[600px] rounded-[30px] shadow-3xl mb-4 flex flex-col overflow-hidden border border-gray-100">
             <div className="bg-primary text-white p-5 font-black uppercase tracking-widest text-xs flex justify-between items-center border-b border-white/10">
               <div className="flex items-center space-x-3">
-                 <img src="/logo.1.png" className="h-8 md:h-10 w-auto object-contain shrink-0" alt="Logi" />
+                 <div className="w-10 h-10 rounded-xl bg-black overflow-hidden border border-white/20 shrink-0 flex items-center justify-center">
+                   <video 
+                     src="/logi_mascot.mp4" 
+                     autoPlay 
+                     loop 
+                     muted 
+                     playsInline 
+                     className="w-full h-full object-contain" 
+                   />
+                 </div>
+                 <div>
+                   <p className="text-xs font-black uppercase tracking-widest leading-tight">Logi AI Assistant</p>
+                   <p className="text-[9px] text-white/70 font-semibold tracking-wide">Vitality & Nutrition Support</p>
+                 </div>
               </div>
               <button onClick={() => setIsChatOpen(false)} className="text-white hover:text-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
